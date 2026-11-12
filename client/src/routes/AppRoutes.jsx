@@ -18,6 +18,7 @@ import UserConsent from '../pages/legal/UserConsent.jsx';
 import InvestorCharter from '../pages/legal/InvestorCharter.jsx';
 import Disclosure from '../pages/legal/Disclosure.jsx';
 import Terms from '../pages/legal/Terms.jsx';
+import AccessibilityStatement from '../pages/legal/AccessibilityStatement.jsx';
 
 export default function AppRoutes() {
   return (
@@ -41,6 +42,7 @@ export default function AppRoutes() {
         <Route path="legal/investor-charter" element={<InvestorCharter />} />
         <Route path="legal/disclosure" element={<Disclosure />} />
         <Route path="legal/terms" element={<Terms />} />
+        <Route path="legal/accessibility" element={<AccessibilityStatement />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
