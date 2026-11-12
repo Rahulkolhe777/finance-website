@@ -1,9 +1,301 @@
+import { useEffect, useRef, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import PricingSection from '../components/home/PricingSection.jsx';
+import { plans, segments } from '../data/plans.js';
+import { createOrder } from '../services/paymentService.js';
+import formatPrice from '../utils/formatPrice.js';
+
+// Replace placeholders with your real details.
+const GATEWAYS = [{ id: 'primary', label: '[GATEWAY]' }];
+const PAYMENT_METHODS = ['UPI', 'Debit / Credit Cards', 'Net Banking', 'Wallets']; // [EDIT TO MATCH YOUR GATEWAY]
+const REFUND_POLICY = '[TEXT]';
+
+const PERIOD_COLUMNS = [
+  { period: 'monthly', label: 'Monthly' },
+  { period: 'quarterly', label: 'Quarterly' },
+  { period: 'half-yearly', label: 'Half-yearly' },
+];
+
+const priceLabel = (price) => (typeof price === 'number' ? formatPrice(price) : '[₹ PRICE]');
+const planFor = (segment, period) => plans.find((p) => p.segment === segment && p.period === period);
+const segmentLabel = (id) => segments.find((s) => s.id === id)?.label || id;
+
+const styles = `
+.pricing-page {
+  --pp-navy: #0B1B2B;
+  --pp-emerald: #0B7A57;
+  --pp-mint: #EEF5F2;
+  --pp-border: #D9E5E0;
+  --pp-muted: #4F5F6B;
+  --pp-gradient: linear-gradient(90deg, #087F58, #0E6E8C);
+  color: var(--pp-navy);
+}
+.pricing-page__hero {
+  background: linear-gradient(#EAF8F1, #fff);
+  padding: clamp(3rem, 7vw, 4.5rem) 0 clamp(1rem, 3vw, 1.5rem);
+  text-align: center;
+}
+.pricing-page__title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.pricing-page__accent {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--pp-emerald);
+}
+.pricing-page__sub { margin: 0 auto; max-width: 38rem; color: var(--pp-muted); font-size: 1.0625rem; }
+.pricing-page__section { padding-block: clamp(2.5rem, 6vw, 4rem); }
+.pricing-page__h2 { margin: 0 0 1.25rem; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; letter-spacing: -0.01em; }
+
+/* checkout */
+.checkout {
+  scroll-margin-top: calc(var(--header-height) + 1rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding: clamp(1.5rem, 4vw, 2rem);
+  border-radius: 24px;
+  background: var(--pp-navy);
+  color: #fff;
+}
+.checkout:focus { outline: none; }
+.checkout__label { margin: 0 0 0.25rem; font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #3DD39B; }
+.checkout__plan { margin: 0; font-size: 1.5rem; font-weight: 800; }
+.checkout__meta { margin: 0.25rem 0 0; color: #A9BAC9; }
+.checkout__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.checkout__error { grid-column: 1 / -1; margin: 0; color: #FFB4A8; font-size: 0.9375rem; }
+.checkout__change { color: #3DD39B; text-decoration: underline; font-size: 0.9375rem; }
+.pay-btn {
+  min-height: 52px;
+  padding: 0 1.75rem;
+  border: 0;
+  border-radius: 9999px;
+  background: var(--pp-gradient);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pay-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.pay-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* comparison */
+.compare__scroll {
+  overflow-x: auto;
+  border: 1px solid var(--pp-border);
+  border-radius: 20px;
+}
+.compare__table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+.compare__table caption { text-align: left; padding: 1rem 1.25rem 0; color: var(--pp-muted); font-size: 0.875rem; }
+.compare__table th,
+.compare__table td { padding: 0.875rem 1.25rem; text-align: left; border-bottom: 1px solid var(--pp-border); }
+.compare__table thead th { background: var(--pp-mint); font-weight: 800; }
+.compare__table thead th.is-featured { background: var(--pp-navy); color: #fff; }
+.compare__table tbody th { font-weight: 600; }
+.compare__table tbody tr:last-child th,
+.compare__table tbody tr:last-child td { border-bottom: 0; }
+.compare__group th { background: #F7FAF9; font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pp-emerald); }
+.compare__yes { color: var(--pp-emerald); font-weight: 700; }
+
+/* payment info */
+.pay-info {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+.pay-info__card {
+  padding: 1.75rem;
+  border: 1px solid var(--pp-border);
+  border-radius: 20px;
+  background: var(--pp-mint);
+}
+.pay-info__title { margin: 0 0 0.75rem; font-size: 1.125rem; font-weight: 800; }
+.pay-info__text { margin: 0; color: var(--pp-muted); line-height: 1.7; }
+.pay-info__chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+.pay-info__chips li { padding: 0.375rem 0.75rem; border: 1px solid var(--pp-border); border-radius: 9999px; background: #fff; font-size: 0.875rem; font-weight: 600; }
+.pay-info__link { color: var(--pp-emerald); text-decoration: underline; }
+@media (max-width: 900px) {
+  .pay-info { grid-template-columns: 1fr; }
+  .checkout { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .checkout__actions .pay-btn { width: 100%; }
+}
+`;
+
 export default function Pricing() {
+  const [searchParams] = useSearchParams();
+  const selectedPlan = plans.find((p) => p.slug === searchParams.get('plan')) || null;
+  const [paying, setPaying] = useState(false);
+  const [payError, setPayError] = useState('');
+  const checkoutRef = useRef(null);
+
+  // Bring the checkout panel into view when arriving with ?plan=…
+  useEffect(() => {
+    if (!selectedPlan) return undefined;
+    setPayError('');
+    const frame = requestAnimationFrame(() => {
+      checkoutRef.current?.scrollIntoView({ block: 'start' });
+      checkoutRef.current?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [selectedPlan]);
+
+  const pay = async (gatewayId) => {
+    if (!selectedPlan) return;
+    setPaying(true);
+    setPayError('');
+    try {
+      const order = await createOrder({ purpose: 'plan', refId: selectedPlan.slug, gateway: gatewayId });
+      if (order && order.redirectUrl) {
+        window.location.assign(order.redirectUrl);
+        return;
+      }
+      setPayError('Online payment is not available yet. Please contact us to subscribe.');
+    } catch {
+      setPayError('Online payment is not available yet. Please contact us to subscribe.');
+    } finally {
+      setPaying(false);
+    }
+  };
+
   return (
-    <div className="page">
-      <div className="container">
-        <h1>Pricing</h1>
+    <div className="pricing-page">
+      <style>{styles}</style>
+
+      <section className="pricing-page__hero" aria-labelledby="pricing-page-title">
+        <div className="container">
+          <h1 id="pricing-page-title" className="pricing-page__title">
+            Pricing &amp; <span className="pricing-page__accent">Payments</span>
+          </h1>
+          <p className="pricing-page__sub">Pick a segment, then choose the plan that fits you</p>
+
+          {selectedPlan && (
+            <section ref={checkoutRef} className="checkout" tabIndex={-1} aria-labelledby="checkout-plan" style={{ textAlign: 'left' }}>
+              <div>
+                <p className="checkout__label">Selected plan</p>
+                <h2 id="checkout-plan" className="checkout__plan">
+                  {segmentLabel(selectedPlan.segment)} · {selectedPlan.name}
+                </h2>
+                <p className="checkout__meta">
+                  {priceLabel(selectedPlan.price)} {selectedPlan.perLabel} · {selectedPlan.billedLabel} ·{' '}
+                  <a href="#plans" className="checkout__change">Change plan</a>
+                </p>
+              </div>
+              <div className="checkout__actions">
+                {GATEWAYS.map((gateway) => (
+                  <button key={gateway.id} type="button" className="pay-btn" disabled={paying} onClick={() => pay(gateway.id)}>
+                    {paying ? 'Redirecting…' : 'Pay with ' + gateway.label}
+                  </button>
+                ))}
+              </div>
+              {payError && <p className="checkout__error" role="alert">{payError}</p>}
+            </section>
+          )}
+        </div>
+      </section>
+
+      <div id="plans">
+        <PricingSection />
       </div>
+
+      <section className="pricing-page__section" style={{ paddingTop: 0 }} aria-labelledby="compare-title">
+        <div className="container">
+          <h2 id="compare-title" className="pricing-page__h2">Compare all plans</h2>
+          <div className="compare__scroll" tabIndex={0} role="region" aria-labelledby="compare-title">
+            <table className="compare__table">
+              <caption>Prices per billing period. Scroll sideways on small screens.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Plan</th>
+                  {PERIOD_COLUMNS.map((col) => (
+                    <th key={col.period} scope="col" className={col.period === 'quarterly' ? 'is-featured' : undefined}>
+                      {col.label}
+                      {col.period === 'quarterly' && ' · Best value'}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="compare__group"><th scope="rowgroup" colSpan={4}>Price by segment</th></tr>
+                {segments.map((segment) => (
+                  <tr key={segment.id}>
+                    <th scope="row">{segment.label}</th>
+                    {PERIOD_COLUMNS.map((col) => {
+                      const plan = planFor(segment.id, col.period);
+                      return <td key={col.period}>{plan ? priceLabel(plan.price) + ' ' + plan.perLabel : '—'}</td>;
+                    })}
+                  </tr>
+                ))}
+                <tr className="compare__group"><th scope="rowgroup" colSpan={4}>What you get</th></tr>
+                <tr>
+                  <th scope="row">Calls a day</th>
+                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>[N]</td>)}
+                </tr>
+                <tr>
+                  <th scope="row">Entry, two targets and a stop-loss</th>
+                  {PERIOD_COLUMNS.map((col) => <td key={col.period} className="compare__yes">✓ Every call</td>)}
+                </tr>
+                <tr>
+                  <th scope="row">Support</th>
+                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>Monday to Saturday</td>)}
+                </tr>
+                <tr>
+                  <th scope="row">Discount on single payment</th>
+                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>{col.period === 'monthly' ? '—' : '[X]%'}</td>)}
+                </tr>
+                <tr>
+                  <th scope="row">Billing</th>
+                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>{planFor(segments[0].id, col.period)?.billedLabel}</td>)}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section className="pricing-page__section" style={{ paddingTop: 0 }} aria-labelledby="payments-title">
+        <div className="container">
+          <h2 id="payments-title" className="pricing-page__h2">Payments</h2>
+          <div className="pay-info">
+            <article className="pay-info__card">
+              <h3 className="pay-info__title">Accepted payment methods</h3>
+              <ul className="pay-info__chips">
+                {PAYMENT_METHODS.map((method) => <li key={method}>{method}</li>)}
+              </ul>
+              <p className="pay-info__text" style={{ marginTop: '1rem' }}>
+                Payments are processed securely by {GATEWAYS[0].label}.
+              </p>
+            </article>
+            <article className="pay-info__card">
+              <h3 className="pay-info__title">GST invoice</h3>
+              <p className="pay-info__text">
+                Fees are [inclusive / exclusive] of GST. A GST invoice is sent to your email after every successful payment.
+              </p>
+            </article>
+            <article className="pay-info__card">
+              <h3 className="pay-info__title">Refund policy</h3>
+              <p className="pay-info__text">{REFUND_POLICY}</p>
+              <p className="pay-info__text" style={{ marginTop: '0.75rem' }}>
+                See our <Link to="/legal/terms" className="pay-info__link">Terms &amp; Conditions</Link>.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
