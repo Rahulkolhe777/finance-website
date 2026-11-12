@@ -68,20 +68,24 @@ export function renderInvoiceHtml(payment) {
   const row = (label, value, bold) =>
     '<tr><td style="padding:6px 0;color:#4F5F6B">' + escapeHtml(label) + '</td><td style="padding:6px 0;text-align:right' + (bold ? ';font-weight:700' : '') + '">' + escapeHtml(value) + '</td></tr>';
 
+  // GST_RATE=0 (not GST-registered): plain payment receipt, no GSTIN or tax lines.
+  const gstRegistered = b.rate > 0;
+
   return (
     '<div style="font-family:Arial,sans-serif;max-width:640px;border:1px solid #D9E5E0;border-radius:12px;padding:24px;color:#0B1B2B">' +
-    '<h2 style="margin:0 0 4px">Tax Invoice</h2>' +
+    '<h2 style="margin:0 0 4px">' + (gstRegistered ? 'Tax Invoice' : 'Payment Receipt') + '</h2>' +
     '<p style="margin:0 0 16px;color:#4F5F6B">' + escapeHtml(payment.invoiceNumber) + ' · ' + escapeHtml(date) + '</p>' +
     '<p style="margin:0"><strong>' + escapeHtml(SELLER.legalName) + '</strong><br>' + escapeHtml(SELLER.address) +
-    '<br>GSTIN: ' + escapeHtml(SELLER.gstin) + ' · SEBI RA No: ' + escapeHtml(SELLER.sebiRaNo) + '</p>' +
+    '<br>' + (gstRegistered ? 'GSTIN: ' + escapeHtml(SELLER.gstin) + ' · ' : '') + 'SEBI RA No: ' + escapeHtml(SELLER.sebiRaNo) + '</p>' +
     '<p style="margin:16px 0"><strong>Billed to</strong><br>' + escapeHtml(payment.customer.name) + '<br>' +
     escapeHtml(payment.customer.email) + ' · +91 ' + escapeHtml(payment.customer.phone) + '</p>' +
     '<table style="width:100%;border-collapse:collapse;border-top:1px solid #D9E5E0">' +
     row('Description', payment.description) +
-    row('SAC code', SELLER.sacCode) +
+    (gstRegistered ? row('SAC code', SELLER.sacCode) : '') +
     row('Order ID', payment.orderId) +
-    row('Taxable value', rupees(b.taxablePaise)) +
-    row('GST @ ' + b.rate + '% (' + SELLER.supplyNote + ')', rupees(b.gstPaise)) +
+    (gstRegistered
+      ? row('Taxable value', rupees(b.taxablePaise)) + row('GST @ ' + b.rate + '% (' + SELLER.supplyNote + ')', rupees(b.gstPaise))
+      : '') +
     row('Total paid', rupees(b.totalPaise), true) +
     '</table>' +
     '<p style="margin:16px 0 0;font-size:12px;color:#4F5F6B">Investments in securities market are subject to market risks. ' +
