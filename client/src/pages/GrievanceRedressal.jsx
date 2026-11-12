@@ -6,7 +6,7 @@ const OFFICER = {
   designation: 'Grievance Officer',
   email: '[OFFICER EMAIL]',
   phone: '[OFFICER PHONE]',
-  hours: '[HOURS]',
+  hours: 'Monday to Saturday, 9:00 AM – 9:00 PM',
 };
 const SCORES_URL = 'https://scores.sebi.gov.in/';
 const SMART_ODR_URL = 'https://smartodr.in/';
