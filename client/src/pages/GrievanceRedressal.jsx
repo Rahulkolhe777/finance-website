@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 
 // Replace placeholders with your real details.
 const OFFICER = {
-  name: '[OFFICER NAME]',
+  name: 'Priya Kolhe',
   designation: 'Grievance Officer',
-  email: '[OFFICER EMAIL]',
-  phone: '[OFFICER PHONE]',
+  email: 'kolhepriya57@gmail.com',
+  phone: '+91 70666 09149',
   hours: 'Monday to Saturday, 9:00 AM – 9:00 PM',
 };
 const SCORES_URL = 'https://scores.sebi.gov.in/';
