@@ -4,22 +4,31 @@ import { services } from '../data/services.js';
 
 // One block per segment. `pricingSegment` must match a tab id in data/plans.js
 // (null = no dedicated pricing tab). Replace every [PLACEHOLDER].
+const PLACEHOLDER_DETAILS = {
+  whoFor: '[TEXT]',
+  callsPerDay: '[N]',
+  approach: '[TEXT]',
+  riskNote: '[RISK NOTE]',
+};
+
 const SEGMENTS = [
   { id: 'advisory', title: 'Advisory', pricingSegment: null },
-  { id: 'cash', title: 'Cash', pricingSegment: 'cash' },
+  {
+    id: 'cash',
+    title: 'Equity Cash',
+    pricingSegment: 'cash',
+    whoFor: 'Retail investors who can hold positions for days to weeks.',
+    callsPerDay: '25–30 calls a month, subject to market conditions',
+    approach: '[TEXT]',
+    riskNote: 'Equity investments carry market risk; past performance does not guarantee future results.',
+  },
   { id: 'stock-options', title: 'Stock Options', pricingSegment: 'stock-options' },
   { id: 'index-options', title: 'Index Options', pricingSegment: 'index-options' },
   { id: 'commodities', title: 'Commodities', pricingSegment: 'commodities' },
   { id: 'energy', title: 'Energy', pricingSegment: 'energy' },
 ]
   .filter((segment) => services.some((s) => s.id === segment.id))
-  .map((segment) => ({
-  ...segment,
-  whoFor: '[TEXT]',
-  callsPerDay: '25–30 calls a month, subject to market conditions',
-  approach: '[TEXT]',
-  riskNote: '[RISK NOTE]',
-}));
+  .map((segment) => ({ ...PLACEHOLDER_DETAILS, ...segment }));
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

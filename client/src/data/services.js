@@ -4,7 +4,7 @@
 // Services page, trial form). Flip a flag when that segment launches.
 const ALL_SERVICES = [
   { id: 'advisory', title: 'Advisory', description: '[YOUR TEXT]', icon: 'advisory', available: false },
-  { id: 'cash', title: 'Cash', description: '[YOUR TEXT]', icon: 'cash', available: true },
+  { id: 'cash', title: 'Equity Cash', description: 'Swing and positional equity calls with clear targets and stop-loss.', icon: 'cash', available: true },
   { id: 'stock-options', title: 'Stock Options', description: '[YOUR TEXT]', icon: 'stockOptions', available: false },
   { id: 'index-options', title: 'Index Options', description: '[YOUR TEXT]', icon: 'indexOptions', available: false },
   { id: 'commodities', title: 'Commodities', description: '[YOUR TEXT]', icon: 'commodities', available: false },
