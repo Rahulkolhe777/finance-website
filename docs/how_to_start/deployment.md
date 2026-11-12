@@ -4,8 +4,8 @@ Chosen setup (free URLs first, own domain later):
 
 | Part | Host | Notes |
 |---|---|---|
-| Frontend (`client/`) | Vercel | `client/vercel.json` sends every path to `index.html` so page refreshes work |
-| API (`server/`) | Render (Web Service) | Free tier sleeps after ~15 min idle; first request then takes ~30 s. Paid Starter stays awake |
+| Frontend (`client/`) | Vercel | `client/vercel.json` sends every path to `index.html`. Hobby plan is non-commercial: move to Pro (or Netlify) once taking payments |
+| API (`server/`) | Render (Web Service) | Free tier sleeps after ~15 min idle; kept awake by an uptime monitor (step 5b) |
 | Database | MongoDB Atlas, free M0, Mumbai (`ap-south-1`) | |
 | Email | Gmail SMTP with an App Password | Switch to Resend/Zoho after buying a domain |
 | Payments | Razorpay **test mode** | Switch to live keys after Razorpay approves the site |
@@ -67,6 +67,17 @@ Render sets `PORT` itself. `CLIENT_URL` must match the Vercel URL exactly (https
 4. Deploy, then put the final Vercel URL into Render's `CLIENT_URL` and redeploy the API.
 
 `VITE_API_URL` is baked in at build time; redeploy the frontend after changing it.
+
+## 5b. Keep the free Render API awake
+
+Render's free tier sleeps after ~15 min without requests, so the first visitor then waits ~30–50 s.
+Create a free UptimeRobot (or similar) HTTP monitor:
+
+- URL: `https://<your-service>.onrender.com/api/health` (note the `/api` prefix; it returns `{"status":"ok"}`)
+- Interval: 5–10 minutes (must stay under 15)
+
+Render still restarts the service on each deploy and occasionally for maintenance; the monitor wakes it again.
+Upgrade to Render Starter when paying clients arrive, then the monitor is optional.
 
 ## 6. Check after deploy
 
