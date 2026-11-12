@@ -3,6 +3,7 @@ import InfoBar from './InfoBar.jsx';
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import WhatsAppButton from '../common/WhatsAppButton.jsx';
+import TrialPopup from '../common/TrialPopup.jsx';
 import useScrollTop from '../../hooks/useScrollTop.js';
 
 const styles = `
@@ -33,6 +34,7 @@ export default function Layout() {
       </main>
       <Footer />
       <WhatsAppButton />
+      <TrialPopup />
     </>
   );
 }
