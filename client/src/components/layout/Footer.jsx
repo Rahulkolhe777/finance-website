@@ -3,7 +3,7 @@ import RiskDisclaimer from '../common/RiskDisclaimer.jsx';
 
 // Replace placeholders with real details.
 const SEBI_RA_NO = 'INH000031611';
-const BSE_NO = '[NO]';
+const BSE_NO = '7656';
 const ADDRESS = 'HP Gas Office, Jalalkheda Road, Panchawati, Katol, Maharashtra 441302';
 const EMAIL = 'kolhepriya57@gmail.com';
 const PHONE = '+91 70389 09149';
