@@ -11,11 +11,11 @@ const SMART_ODR_URL = 'https://smartodr.in/';
 
 // Set `url` for each profile you use; entries without a url are not shown.
 const SOCIAL_LINKS = [
-  { label: 'YouTube', url: '', icon: 'M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-3.8 31 31 0 0 0-.4-3.8zM10 15V9l5.2 3L10 15z' },
-  { label: 'Instagram', url: '', icon: 'M7 2.5h10A4.5 4.5 0 0 1 21.5 7v10a4.5 4.5 0 0 1-4.5 4.5H7A4.5 4.5 0 0 1 2.5 17V7A4.5 4.5 0 0 1 7 2.5zM12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8zM17.5 6.5h.01' },
-  { label: 'LinkedIn', url: '', icon: 'M4 9h4v11H4zM6 3.5a2 2 0 1 1 0 4a2 2 0 0 1 0-4zM10 9h3.8v1.6c.6-1 1.9-1.9 3.7-1.9 3.4 0 4 2.2 4 5.1V20h-4v-5.4c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V20h-3.7z' },
-  { label: 'X (Twitter)', url: '', icon: 'M4 4l7 9.3L4.3 20H6l5.8-5.9L16.4 20H20l-7.3-9.8L19 4h-1.7l-5.3 5.4L8 4z' },
-  { label: 'Telegram', url: '', icon: 'M21.5 4.5L2.8 11.7c-1 .4-1 1.6.1 1.9l4.6 1.4 1.8 5.5c.2.7 1.1.9 1.6.4l2.6-2.4 4.7 3.5c.6.4 1.4.1 1.6-.6l3.2-15.2c.2-.9-.6-1.6-1.5-1.2zM9.5 14.6l8.5-7.6' },
+  { label: 'YouTube', url: 'https://youtube.com/@finshalawithpriya', icon: 'M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-3.8 31 31 0 0 0-.4-3.8zM10 15V9l5.2 3L10 15z' },
+  { label: 'Instagram', url: 'https://www.instagram.com/finshala.with.priya', icon: 'M7 2.5h10A4.5 4.5 0 0 1 21.5 7v10a4.5 4.5 0 0 1-4.5 4.5H7A4.5 4.5 0 0 1 2.5 17V7A4.5 4.5 0 0 1 7 2.5zM12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8zM17.5 6.5h.01' },
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/finshala-with-priya-196a80127', icon: 'M4 9h4v11H4zM6 3.5a2 2 0 1 1 0 4a2 2 0 0 1 0-4zM10 9h3.8v1.6c.6-1 1.9-1.9 3.7-1.9 3.4 0 4 2.2 4 5.1V20h-4v-5.4c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V20h-3.7z' },
+  { label: 'X (Twitter)', url: 'https://x.com/FinShalaPriya', icon: 'M4 4l7 9.3L4.3 20H6l5.8-5.9L16.4 20H20l-7.3-9.8L19 4h-1.7l-5.3 5.4L8 4z' },
+  { label: 'Telegram', url: 'https://t.me/FinShalaPriya', icon: 'M21.5 4.5L2.8 11.7c-1 .4-1 1.6.1 1.9l4.6 1.4 1.8 5.5c.2.7 1.1.9 1.6.4l2.6-2.4 4.7 3.5c.6.4 1.4.1 1.6-.6l3.2-15.2c.2-.9-.6-1.6-1.5-1.2zM9.5 14.6l8.5-7.6' },
 ];
 
 const COMPANY_LINKS = [
