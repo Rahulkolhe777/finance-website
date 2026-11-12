@@ -8,7 +8,7 @@ import formatPrice from '../utils/formatPrice.js';
 // Replace placeholders with your real details.
 const GATEWAYS = [{ id: 'primary', label: 'Razorpay' }];
 const PAYMENT_METHODS = ['UPI', 'Debit / Credit Cards', 'Net Banking', 'Wallets'];
-const REFUND_POLICY = '[TEXT]';
+const REFUND_POLICY = 'Fees once paid are non-refundable. Please use the free trial before subscribing.';
 
 const PERIOD_COLUMNS = periods.map((p) => ({ period: p.period, label: p.name, featured: p.featured }));
 
