@@ -65,9 +65,9 @@ const sendPaymentEmails = async (payment) => {
     to: payment.customer.email,
     subject: 'Payment received — ' + payment.invoiceNumber,
     text: 'Hi ' + payment.customer.name + ',\n\nWe have received your payment of ' + amount + ' for ' + payment.description +
-      '.\nOrder ID: ' + payment.orderId + '\nInvoice: ' + payment.invoiceNumber + '\n\nYour tax invoice is included in this email.\n\n[YOUR NAME]',
+      '.\nOrder ID: ' + payment.orderId + '\nInvoice: ' + payment.invoiceNumber + '\n\nYour tax invoice is included in this email.\n\nPriya Kolhe',
     html: '<div style="font-family:Arial,sans-serif;line-height:1.6"><p>Hi ' + payment.customer.name.replace(/[<>&"']/g, '') +
-      ',</p><p>We have received your payment. Your tax invoice is below.</p>' + invoice + '<p>[YOUR NAME]</p></div>',
+      ',</p><p>We have received your payment. Your tax invoice is below.</p>' + invoice + '<p>Priya Kolhe</p></div>',
   });
   await Payment.updateOne({ _id: payment._id }, { $set: { receiptSentAt: new Date() } });
 

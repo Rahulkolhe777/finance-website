@@ -90,10 +90,10 @@ export async function sendLeadAutoReply(lead) {
   return sendEmail({
     to: lead.email,
     subject: 'We have received your request',
-    text: [greeting, '', ...body, '', '[YOUR NAME]', 'SEBI Registered Research Analyst'].join('\n'),
+    text: [greeting, '', ...body, '', 'Priya Kolhe', 'SEBI Registered Research Analyst'].join('\n'),
     html:
       '<div style="font-family:sans-serif;line-height:1.6"><p>' + escapeHtml(greeting) + '</p>' +
       body.map((p) => '<p>' + escapeHtml(p) + '</p>').join('') +
-      '<p>[YOUR NAME]<br>SEBI Registered Research Analyst</p></div>',
+      '<p>Priya Kolhe<br>SEBI Registered Research Analyst</p></div>',
   });
 }

@@ -196,7 +196,7 @@ export default function Header() {
     <header className={'header' + (isScrolled ? ' is-scrolled' : '')}>
       <style>{styles}</style>
       <div className="container header__inner">
-        <Link to="/" className="header__logo" aria-label="Home">[LOGO]</Link>
+        <Link to="/" className="header__logo">Priya Kolhe</Link>
 
         <nav className="header__nav header__desktop-only" aria-label="Main">
           {NAV_LINKS.map((link) => (
@@ -232,7 +232,7 @@ export default function Header() {
         inert={isMenuOpen ? undefined : ''}
       >
         <div className="header__drawer-top">
-          <Link to="/" className="header__logo" onClick={closeMenu}>[LOGO]</Link>
+          <Link to="/" className="header__logo" onClick={closeMenu}>Priya Kolhe</Link>
           <button type="button" className="header__toggle" style={{ display: 'inline-flex' }} aria-label="Close menu" onClick={closeMenu}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
               <path d="M6 6l12 12M18 6L6 18" />

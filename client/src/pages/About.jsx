@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Replace every [PLACEHOLDER] with your real details.
-const ANALYST_NAME = '[YOUR NAME]';
+const ANALYST_NAME = 'Priya Kolhe';
 const ANALYST_PHOTO = '/images/analyst.webp';
 const STORY = ['[TEXT]'];
 const CREDENTIALS = [

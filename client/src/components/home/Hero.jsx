@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 // Replace placeholders with real details. Drop a transparent analyst photo at
 // client/public/images/analyst.webp (PNG also works — update the path).
-const ANALYST_NAME = '[YOUR NAME]';
+const ANALYST_NAME = 'Priya Kolhe';
 const SEBI_NO = '[YOUR SEBI NO]';
 const ANALYST_PHOTO = '/images/analyst.webp';
 

@@ -187,7 +187,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer__grid">
           <div>
-            <Link to="/" className="footer__logo" aria-label="Home">[LOGO]</Link>
+            <Link to="/" className="footer__logo">Priya Kolhe</Link>
             <p className="footer__brand-line">SEBI Registered Research Analyst</p>
             <p className="footer__reg">
               SEBI RA No: {SEBI_RA_NO}
@@ -260,7 +260,7 @@ export default function Footer() {
 
         <hr className="footer__divider" />
         <RiskDisclaimer variant="dark" />
-        <p className="footer__copy">&copy; {new Date().getFullYear()} [YOUR NAME]. All rights reserved.</p>
+        <p className="footer__copy">&copy; {new Date().getFullYear()} Priya Kolhe. All rights reserved.</p>
       </div>
     </footer>
   );
