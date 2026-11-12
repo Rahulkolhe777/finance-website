@@ -6,3 +6,12 @@ dist/
 logs/
 *.log
 .DS_Store
+
+# Secrets & credentials - never commit
+*.pem
+*.key
+*.p12
+*.pfx
+service-account*.json
+credentials*.json
+secrets/
