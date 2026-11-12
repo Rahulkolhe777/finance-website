@@ -33,7 +33,7 @@ const styles = `
 }
 .info-bar a:hover,
 .info-bar a:focus-visible {
-  color: var(--color-teal);
+  color: var(--color-emerald-on-dark);
 }
 .info-bar__sep {
   color: var(--color-on-dark-muted);

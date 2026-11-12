@@ -76,14 +76,14 @@ const styles = `
   font-weight: 600;
   font-size: 0.9375rem;
   white-space: nowrap;
-  box-shadow: 0 6px 16px rgba(15, 122, 92, 0.25);
+  box-shadow: 0 6px 16px rgba(11, 122, 87, 0.25);
   transition: transform var(--transition), box-shadow var(--transition);
 }
 .header__cta:hover,
 .header__cta:focus-visible {
   color: #fff;
   transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(15, 122, 92, 0.32);
+  box-shadow: 0 10px 22px rgba(11, 122, 87, 0.32);
 }
 .header__toggle {
   display: none;
