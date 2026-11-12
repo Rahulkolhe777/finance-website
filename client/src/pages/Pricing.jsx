@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import PricingSection from '../components/home/PricingSection.jsx';
-import { plans, segments } from '../data/plans.js';
+import { periods, plans, segments } from '../data/plans.js';
 import CheckoutForm from '../components/forms/CheckoutForm.jsx';
 import formatPrice from '../utils/formatPrice.js';
 
@@ -10,11 +10,7 @@ const GATEWAYS = [{ id: 'primary', label: '[GATEWAY]' }];
 const PAYMENT_METHODS = ['UPI', 'Debit / Credit Cards', 'Net Banking', 'Wallets']; // [EDIT TO MATCH YOUR GATEWAY]
 const REFUND_POLICY = '[TEXT]';
 
-const PERIOD_COLUMNS = [
-  { period: 'monthly', label: 'Monthly' },
-  { period: 'quarterly', label: 'Quarterly' },
-  { period: 'half-yearly', label: 'Half-yearly' },
-];
+const PERIOD_COLUMNS = periods.map((p) => ({ period: p.period, label: p.name, featured: p.featured, discount: p.discount }));
 
 const priceLabel = (price) => (typeof price === 'number' ? formatPrice(price) : '[₹ PRICE]');
 const planFor = (segment, period) => plans.find((p) => p.segment === segment && p.period === period);
@@ -180,15 +176,15 @@ export default function Pricing() {
                 <tr>
                   <th scope="col">Plan</th>
                   {PERIOD_COLUMNS.map((col) => (
-                    <th key={col.period} scope="col" className={col.period === 'quarterly' ? 'is-featured' : undefined}>
+                    <th key={col.period} scope="col" className={col.featured ? 'is-featured' : undefined}>
                       {col.label}
-                      {col.period === 'quarterly' && ' · Best value'}
+                      {col.featured && ' · Best value'}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                <tr className="compare__group"><th scope="rowgroup" colSpan={4}>Price by segment</th></tr>
+                <tr className="compare__group"><th scope="rowgroup" colSpan={PERIOD_COLUMNS.length + 1}>Price by segment</th></tr>
                 {segments.map((segment) => (
                   <tr key={segment.id}>
                     <th scope="row">{segment.label}</th>
@@ -198,7 +194,7 @@ export default function Pricing() {
                     })}
                   </tr>
                 ))}
-                <tr className="compare__group"><th scope="rowgroup" colSpan={4}>What you get</th></tr>
+                <tr className="compare__group"><th scope="rowgroup" colSpan={PERIOD_COLUMNS.length + 1}>What you get</th></tr>
                 <tr>
                   <th scope="row">Calls a day</th>
                   {PERIOD_COLUMNS.map((col) => <td key={col.period}>[N]</td>)}
@@ -213,7 +209,7 @@ export default function Pricing() {
                 </tr>
                 <tr>
                   <th scope="row">Discount on single payment</th>
-                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>{col.period === 'monthly' ? '—' : '[X]%'}</td>)}
+                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>{col.discount ? col.discount + '%' : '—'}</td>)}
                 </tr>
                 <tr>
                   <th scope="row">Billing</th>

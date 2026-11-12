@@ -272,6 +272,7 @@ export default function PricingSection() {
           <p className="pricing__sub">Pick a segment, then choose the plan that fits you</p>
         </header>
 
+        {segments.length > 1 && (
         <div className="pricing__tabs" role="tablist" aria-label="Market segment">
           {segments.map((segment, index) => {
             const selected = segment.id === activeSegment;
@@ -295,7 +296,9 @@ export default function PricingSection() {
           })}
         </div>
 
-        <div id="pricing-panel" role="tabpanel" aria-labelledby={'pricing-tab-' + activeSegment}>
+        )}
+
+        <div id="pricing-panel" {...(segments.length > 1 ? { role: 'tabpanel', 'aria-labelledby': 'pricing-tab-' + activeSegment } : {})}>
           <ul className="pricing__list">
             {visiblePlans.map((plan) => (
               <li key={plan.slug}>

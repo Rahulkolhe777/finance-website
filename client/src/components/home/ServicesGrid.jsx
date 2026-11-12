@@ -52,6 +52,7 @@ const styles = `
 .services-grid__list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-content: center;
   gap: clamp(1rem, 2vw, 1.5rem);
   margin: 0;
   padding: 0;
@@ -151,7 +152,7 @@ export default function ServicesGrid() {
           <p className="services-grid__sub">Invest hassle-free with research-backed advice</p>
         </header>
 
-        <ul className="services-grid__list">
+        <ul className="services-grid__list" style={services.length < 3 ? { gridTemplateColumns: 'repeat(' + services.length + ', minmax(0, 380px))' } : undefined}>
           {services.map((service) => (
             <li key={service.id}>
               <article className="services-grid__card">

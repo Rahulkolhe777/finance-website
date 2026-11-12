@@ -3,7 +3,7 @@
 // Shape: { question, answer }
 export const faqs = [
   { question: 'Are you SEBI registered?', answer: 'Yes. Our registration number is INH000031611.' },
-  { question: 'Which plans are available?', answer: 'Monthly, quarterly and yearly. [EDIT TO MATCH YOUR PLANS]' },
+  { question: 'Which plans are available?', answer: 'We currently offer Equity Cash research on quarterly, half-yearly and yearly plans.' },
   { question: 'What is your refund policy?', answer: '[YOUR REFUND POLICY]' },
   { question: 'Do you offer guaranteed returns?', answer: 'No. Market investments carry risk and returns are never guaranteed.' },
   { question: 'Do you handle or manage my trading account?', answer: '[PASTE ANSWER]' },

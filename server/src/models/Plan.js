@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export const PLAN_SEGMENTS = ['cash', 'stock-options', 'index-options', 'commodities', 'energy'];
-export const PLAN_PERIODS = ['monthly', 'quarterly', 'half-yearly'];
+export const PLAN_PERIODS = ['monthly', 'quarterly', 'half-yearly', 'yearly'];
 
 const planSchema = new mongoose.Schema(
   {

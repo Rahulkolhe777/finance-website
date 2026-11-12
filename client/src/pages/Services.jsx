@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { services } from '../data/services.js';
 
 // One block per segment. `pricingSegment` must match a tab id in data/plans.js
 // (null = no dedicated pricing tab). Replace every [PLACEHOLDER].
@@ -10,7 +11,9 @@ const SEGMENTS = [
   { id: 'index-options', title: 'Index Options', pricingSegment: 'index-options' },
   { id: 'commodities', title: 'Commodities', pricingSegment: 'commodities' },
   { id: 'energy', title: 'Energy', pricingSegment: 'energy' },
-].map((segment) => ({
+]
+  .filter((segment) => services.some((s) => s.id === segment.id))
+  .map((segment) => ({
   ...segment,
   whoFor: '[TEXT]',
   callsPerDay: '[N]',
@@ -50,6 +53,7 @@ const styles = `
   color: var(--sp-emerald);
 }
 .services-page__sub { margin: 0 auto; max-width: 36rem; color: var(--sp-muted); font-size: 1.0625rem; }
+.services-page__layout--single { grid-template-columns: minmax(0, 860px) !important; justify-content: center; }
 .services-page__layout {
   display: grid;
   grid-template-columns: 240px minmax(0, 1fr);
@@ -237,7 +241,8 @@ export default function Services() {
         </div>
       </section>
 
-      <div className="container services-page__layout">
+      <div className={'container services-page__layout' + (SEGMENTS.length > 1 ? '' : ' services-page__layout--single')}>
+        {SEGMENTS.length > 1 && (
         <nav className="services-nav" aria-label="Service segments">
           <ul className="services-nav__list">
             {SEGMENTS.map((segment) => (
@@ -255,6 +260,7 @@ export default function Services() {
             ))}
           </ul>
         </nav>
+        )}
 
         <div className="services-blocks">
           {SEGMENTS.map((segment) => (
