@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { COURSES_ENABLED } from '../../data/courses.js';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About Us' },
   { to: '/services', label: 'Services' },
-  { to: '/courses', label: 'Courses' },
+  ...(COURSES_ENABLED ? [{ to: '/courses', label: 'Courses' }] : []),
   { to: '/pricing', label: 'Pricing & Payments' },
   { to: '/contact', label: 'Contact Us' },
 ];
@@ -76,14 +77,14 @@ const styles = `
   font-weight: 600;
   font-size: 0.9375rem;
   white-space: nowrap;
-  box-shadow: 0 6px 16px rgba(15, 122, 92, 0.25);
+  box-shadow: 0 6px 16px rgba(11, 122, 87, 0.25);
   transition: transform var(--transition), box-shadow var(--transition);
 }
 .header__cta:hover,
 .header__cta:focus-visible {
   color: #fff;
   transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(15, 122, 92, 0.32);
+  box-shadow: 0 10px 22px rgba(11, 122, 87, 0.32);
 }
 .header__toggle {
   display: none;
@@ -196,7 +197,7 @@ export default function Header() {
     <header className={'header' + (isScrolled ? ' is-scrolled' : '')}>
       <style>{styles}</style>
       <div className="container header__inner">
-        <Link to="/" className="header__logo" aria-label="Home">[LOGO]</Link>
+        <Link to="/" className="header__logo">Priya Kolhe</Link>
 
         <nav className="header__nav header__desktop-only" aria-label="Main">
           {NAV_LINKS.map((link) => (
@@ -232,7 +233,7 @@ export default function Header() {
         inert={isMenuOpen ? undefined : ''}
       >
         <div className="header__drawer-top">
-          <Link to="/" className="header__logo" onClick={closeMenu}>[LOGO]</Link>
+          <Link to="/" className="header__logo" onClick={closeMenu}>Priya Kolhe</Link>
           <button type="button" className="header__toggle" style={{ display: 'inline-flex' }} aria-label="Close menu" onClick={closeMenu}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
               <path d="M6 6l12 12M18 6L6 18" />

@@ -1,5 +1,5 @@
 // Full number with country code, digits only (e.g. 91XXXXXXXXXX).
-const WHATSAPP_NUMBER = '[NUMBER]';
+const WHATSAPP_NUMBER = '917038909149';
 
 const styles = `
 .whatsapp-fab {

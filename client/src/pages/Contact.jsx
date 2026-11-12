@@ -2,10 +2,10 @@ import { useSearchParams } from 'react-router-dom';
 import ContactForm from '../components/forms/ContactForm.jsx';
 
 // Replace placeholders with your real details.
-const PHONE = '[YOUR PHONE]';
-const EMAIL = 'support@[YOUR-DOMAIN].com';
-const ADDRESS = '[YOUR ADDRESS]';
-const OFFICE_HOURS = '[HOURS]';
+const PHONE = '+91 70389 09149';
+const EMAIL = 'kolhepriya57@gmail.com';
+const ADDRESS = 'HP Gas Office, Jalalkheda Road, Panchawati, Katol, Maharashtra 441302';
+const OFFICE_HOURS = 'Monday to Sunday, 9:00 AM – 9:00 PM';
 
 const isPlaceholder = (text) => /\[[^\]]+\]/.test(text);
 
@@ -110,7 +110,10 @@ export default function Contact() {
           <h1 id="contact-title" className="contact-page__title">
             Contact <span className="contact-page__accent">Us</span>
           </h1>
-          <p className="contact-page__sub">[YOUR TEXT]</p>
+          <p className="contact-page__sub">
+            Have a question about our research or plans? Call, WhatsApp or email us; we're available Monday to
+            Sunday, 9:00 AM – 9:00 PM.
+          </p>
         </div>
       </section>
 

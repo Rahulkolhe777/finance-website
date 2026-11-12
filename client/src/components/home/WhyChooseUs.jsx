@@ -2,22 +2,22 @@
 const REASONS = [
   {
     title: 'Expert Guidance',
-    description: '[YOUR CLAIMS]',
+    description: 'Calls built from technical and fundamental research.',
     icon: 'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4.9 1 .9 1.6V16h5.2v-.5c0-.6.3-1.2.9-1.6A6 6 0 0 0 12 3z',
   },
   {
-    title: 'Certified Team',
-    description: '[YOUR CLAIMS]',
+    title: 'Certified Analyst',
+    description: 'SEBI-registered and NISM Series XV certified.',
     icon: 'M12 3l2.4 1.8 3 .1.9 2.9 2.4 1.8-.9 2.9.9 2.9-2.4 1.8-.9 2.9-3 .1L12 21l-2.4-1.8-3-.1-.9-2.9-2.4-1.8.9-2.9-.9-2.9 2.4-1.8.9-2.9 3-.1L12 3zM8.5 12l2.5 2.5 4.5-5',
   },
   {
     title: 'Trusted Brokers',
-    description: '[YOUR CLAIMS]',
+    description: 'Trade through any SEBI-registered broker of your choice.',
     icon: 'M3 21h18M5 21V10M19 21V10M9 21v-7M15 21v-7M2 10l10-6 10 6H2z',
   },
   {
-    title: 'Support Mon–Sat',
-    description: '[YOUR CLAIMS]',
+    title: 'Support Mon–Sun',
+    description: 'Help available 9 AM – 9 PM, every day.',
     icon: 'M4 14v-2a8 8 0 0 1 16 0v2M4 14a2 2 0 0 0 2 2h1v-5H6a2 2 0 0 0-2 2zM20 14a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 2zM17 16v1a3 3 0 0 1-3 3h-2',
   },
 ];

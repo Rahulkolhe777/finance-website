@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Accordion from '../components/common/Accordion.jsx';
+import CheckoutForm from '../components/forms/CheckoutForm.jsx';
 import { getCourseBySlug } from '../services/courseService.js';
-import { PLACEHOLDER_COURSES, coursePriceLabel } from './Courses.jsx';
+import { courses as PLACEHOLDER_COURSES } from '../data/courses.js';
+import { priceOrPlaceholder } from '../utils/formatPrice.js';
 
-// Until online course payments are built, Enroll sends the visitor to Contact with the course pre-filled.
-const enrollPath = (slug) => '/contact?course=' + encodeURIComponent(slug);
 
 const styles = `
 .course-detail {
@@ -97,6 +97,7 @@ const styles = `
 .course-detail__fact { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.9375rem; }
 .course-detail__fact dt { color: var(--cd-muted); }
 .course-detail__fact dd { margin: 0; font-weight: 700; text-align: right; }
+button.course-detail__enroll { width: 100%; border: 0; font: inherit; font-weight: 700; cursor: pointer; }
 .course-detail__enroll {
   display: flex;
   align-items: center;
@@ -124,12 +125,14 @@ export default function CourseDetail() {
   const placeholder = PLACEHOLDER_COURSES.find((c) => c.slug === slug) || null;
   const [course, setCourse] = useState(placeholder);
   const [status, setStatus] = useState(placeholder ? 'ready' : 'loading');
+  const [showCheckout, setShowCheckout] = useState(false);
 
   useEffect(() => {
     let active = true;
     const fallback = PLACEHOLDER_COURSES.find((c) => c.slug === slug) || null;
     setCourse(fallback);
     setStatus(fallback ? 'ready' : 'loading');
+    setShowCheckout(false);
     getCourseBySlug(slug)
       .then((data) => {
         if (!active) return;
@@ -231,13 +234,25 @@ export default function CourseDetail() {
         </div>
 
         <aside className="course-detail__aside" aria-label="Enrollment">
-          <p className="course-detail__price">{coursePriceLabel(course.price)}</p>
+          <p className="course-detail__price">{priceOrPlaceholder(course.price)}</p>
           <dl className="course-detail__facts">
             <div className="course-detail__fact"><dt>Duration</dt><dd>{course.duration || '[DURATION]'}</dd></div>
             <div className="course-detail__fact"><dt>Level</dt><dd>{course.level}</dd></div>
             <div className="course-detail__fact"><dt>Mode</dt><dd>{course.mode}</dd></div>
           </dl>
-          <Link to={enrollPath(course.slug)} className="course-detail__enroll">Enroll Now</Link>
+          {showCheckout ? (
+            <CheckoutForm
+              key={course.slug}
+              purpose="course"
+              refId={course.slug}
+              idPrefix="course-checkout"
+              payLabel={'Pay ' + priceOrPlaceholder(course.price) + ' & Enroll'}
+            />
+          ) : (
+            <button type="button" className="course-detail__enroll" onClick={() => setShowCheckout(true)}>
+              Enroll Now
+            </button>
+          )}
           <p className="course-detail__note">
             Courses are for education only and are not investment advice. [ADD YOUR EDUCATION DISCLAIMER]
           </p>

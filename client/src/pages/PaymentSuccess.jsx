@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { getPaymentStatus } from '../services/paymentService.js';
 
-// Display-only page. Payment status is confirmed on the server (gateway
-// verification/webhook), never from this URL.
+// Payment status is confirmed on the server (gateway check); this page only
+// reads it back via the API, never trusting the URL.
 const styles = `
 .payment-result {
   padding: clamp(3.5rem, 8vw, 6rem) 0;
@@ -31,6 +33,7 @@ const styles = `
 }
 .payment-result__title { margin: 0 0 0.75rem; font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 800; letter-spacing: -0.02em; }
 .payment-result__text { margin: 0 0 0.5rem; color: #4F5F6B; line-height: 1.7; }
+.payment-result__pending { margin: 1rem 0 0; padding: 0.875rem 1rem; border-radius: 12px; background: #FFF8EC; color: #6B4A0E; font-size: 0.9375rem; }
 .payment-result__ref { margin: 1rem 0 0; font-size: 0.875rem; color: #4F5F6B; }
 .payment-result__steps {
   margin: 1.5rem 0 0;
@@ -59,6 +62,20 @@ const styles = `
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
   const orderId = (searchParams.get('order') || '').replace(/[^\w-]/g, '').slice(0, 64);
+  const [details, setDetails] = useState(null);
+
+  useEffect(() => {
+    if (!orderId) return undefined;
+    let active = true;
+    getPaymentStatus(orderId)
+      .then((data) => active && setDetails(data))
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [orderId]);
+
+  const isPending = details && details.status !== 'paid';
 
   return (
     <section className="payment-result" aria-labelledby="payment-success-title">
@@ -71,12 +88,20 @@ export default function PaymentSuccess() {
             </svg>
           </div>
           <h1 id="payment-success-title" className="payment-result__title">Payment successful</h1>
-          <p className="payment-result__text">Thank you for subscribing. Your payment has been received.</p>
+          <p className="payment-result__text">Thank you. Your payment has been received.</p>
           {orderId && <p className="payment-result__ref">Order reference: <strong>{orderId}</strong></p>}
+          {details?.description && <p className="payment-result__ref">Purchased: <strong>{details.description}</strong></p>}
+          {details?.invoiceNumber && <p className="payment-result__ref">Invoice number: <strong>{details.invoiceNumber}</strong></p>}
+          {isPending && (
+            <p className="payment-result__pending" role="status">
+              We are still confirming this payment with our payment partner. If money was debited, your
+              confirmation email will follow shortly.
+            </p>
+          )}
 
           <ol className="payment-result__steps">
-            <li>A GST invoice will be sent to your registered email.</li>
-            <li>Our team will contact you to activate your service. [EDIT NEXT STEPS]</li>
+            <li>A payment receipt will be sent to your registered email.</li>
+            <li>Our team will contact you and add you to our WhatsApp and Telegram channels to start receiving calls.</li>
             <li>Read the <Link to="/legal/investor-charter">Investor Charter</Link> and <Link to="/legal/terms">Terms</Link>.</li>
           </ol>
 

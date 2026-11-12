@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { plans, segments } from '../../data/plans.js';
 import formatPrice from '../../utils/formatPrice.js';
 
@@ -224,10 +224,25 @@ const styles = `
 }
 `;
 
+// Segment from ?segment=<id> or the segment of ?plan=<slug>; falls back to the first tab.
+const segmentFromParams = (params) => {
+  const segment = params.get('segment');
+  if (segments.some((s) => s.id === segment)) return segment;
+  const plan = plans.find((p) => p.slug === params.get('plan'));
+  return plan ? plan.segment : segments[0].id;
+};
+
 const priceLabel = (price) => (typeof price === 'number' ? formatPrice(price) : '[₹ PRICE]');
 
 export default function PricingSection() {
-  const [activeSegment, setActiveSegment] = useState(segments[0].id);
+  const [searchParams] = useSearchParams();
+  const urlSegment = segmentFromParams(searchParams);
+  const [activeSegment, setActiveSegment] = useState(urlSegment);
+
+  // Follow the URL when it changes (e.g. arriving from a Services page Subscribe link).
+  useEffect(() => {
+    setActiveSegment(urlSegment);
+  }, [urlSegment]);
   const tabRefs = useRef([]);
 
   const visiblePlans = useMemo(
@@ -257,6 +272,7 @@ export default function PricingSection() {
           <p className="pricing__sub">Pick a segment, then choose the plan that fits you</p>
         </header>
 
+        {segments.length > 1 && (
         <div className="pricing__tabs" role="tablist" aria-label="Market segment">
           {segments.map((segment, index) => {
             const selected = segment.id === activeSegment;
@@ -280,7 +296,9 @@ export default function PricingSection() {
           })}
         </div>
 
-        <div id="pricing-panel" role="tabpanel" aria-labelledby={'pricing-tab-' + activeSegment}>
+        )}
+
+        <div id="pricing-panel" {...(segments.length > 1 ? { role: 'tabpanel', 'aria-labelledby': 'pricing-tab-' + activeSegment } : {})}>
           <ul className="pricing__list">
             {visiblePlans.map((plan) => (
               <li key={plan.slug}>
@@ -322,8 +340,8 @@ export default function PricingSection() {
         </div>
 
         <p className="pricing__note">
-          Fees are [inclusive / exclusive] of GST. Pay securely online through [YOUR PAYMENT GATEWAY].{' '}
-          [YOUR REFUND POLICY]. No guaranteed returns; market investments carry risk.{' '}
+          Fees are inclusive of GST. Pay securely online through Razorpay.{' '}
+          Fees once paid are non-refundable. No guaranteed returns; market investments carry risk.{' '}
           [ADD YOUR FEE DISCLOSURE AS REQUIRED BY SEBI]
         </p>
       </div>

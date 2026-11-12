@@ -1,22 +1,34 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { services } from '../data/services.js';
 
 // One block per segment. `pricingSegment` must match a tab id in data/plans.js
 // (null = no dedicated pricing tab). Replace every [PLACEHOLDER].
-const SEGMENTS = [
-  { id: 'advisory', title: 'Advisory', pricingSegment: null },
-  { id: 'cash', title: 'Cash', pricingSegment: 'cash' },
-  { id: 'stock-options', title: 'Stock Options', pricingSegment: 'stock-options' },
-  { id: 'index-options', title: 'Index Options', pricingSegment: 'index-options' },
-  { id: 'commodities', title: 'Commodities', pricingSegment: 'commodities' },
-  { id: 'energy', title: 'Energy', pricingSegment: 'energy' },
-].map((segment) => ({
-  ...segment,
+const PLACEHOLDER_DETAILS = {
   whoFor: '[TEXT]',
   callsPerDay: '[N]',
   approach: '[TEXT]',
   riskNote: '[RISK NOTE]',
-}));
+};
+
+const SEGMENTS = [
+  { id: 'advisory', title: 'Advisory', pricingSegment: null },
+  {
+    id: 'cash',
+    title: 'Equity Cash',
+    pricingSegment: 'cash',
+    whoFor: 'Retail investors who can hold positions for days to weeks.',
+    callsPerDay: '25–30 calls a month, subject to market conditions',
+    approach: 'Every call comes with an entry range, a target and a stop-loss. We share updates when targets or stop-losses are hit.',
+    riskNote: 'Equity investments carry market risk; past performance does not guarantee future results.',
+  },
+  { id: 'stock-options', title: 'Stock Options', pricingSegment: 'stock-options' },
+  { id: 'index-options', title: 'Index Options', pricingSegment: 'index-options' },
+  { id: 'commodities', title: 'Commodities', pricingSegment: 'commodities' },
+  { id: 'energy', title: 'Energy', pricingSegment: 'energy' },
+]
+  .filter((segment) => services.some((s) => s.id === segment.id))
+  .map((segment) => ({ ...PLACEHOLDER_DETAILS, ...segment }));
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -50,6 +62,7 @@ const styles = `
   color: var(--sp-emerald);
 }
 .services-page__sub { margin: 0 auto; max-width: 36rem; color: var(--sp-muted); font-size: 1.0625rem; }
+.services-page__layout--single { grid-template-columns: minmax(0, 860px) !important; justify-content: center; }
 .services-page__layout {
   display: grid;
   grid-template-columns: 240px minmax(0, 1fr);
@@ -237,7 +250,8 @@ export default function Services() {
         </div>
       </section>
 
-      <div className="container services-page__layout">
+      <div className={'container services-page__layout' + (SEGMENTS.length > 1 ? '' : ' services-page__layout--single')}>
+        {SEGMENTS.length > 1 && (
         <nav className="services-nav" aria-label="Service segments">
           <ul className="services-nav__list">
             {SEGMENTS.map((segment) => (
@@ -255,6 +269,7 @@ export default function Services() {
             ))}
           </ul>
         </nav>
+        )}
 
         <div className="services-blocks">
           {SEGMENTS.map((segment) => (
@@ -274,7 +289,7 @@ export default function Services() {
                   <dd>{segment.whoFor}</dd>
                 </div>
                 <div className="service-block__fact">
-                  <dt>Calls per day</dt>
+                  <dt>Number of calls</dt>
                   <dd>{segment.callsPerDay}</dd>
                 </div>
                 <div className="service-block__fact" style={{ gridColumn: '1 / -1' }}>

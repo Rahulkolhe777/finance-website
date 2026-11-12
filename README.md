@@ -17,3 +17,7 @@ The Vite dev server proxies `/api` to the backend.
 - All API calls only in `client/src/services`.
 - Business logic only in server controllers; schemas only in server models; routes only list endpoints and call controllers.
 - Secrets only in `.env` files, never in code.
+
+## Deployment
+
+See [docs/how_to_start/deployment.md](docs/how_to_start/deployment.md) (Vercel + Render + MongoDB Atlas).

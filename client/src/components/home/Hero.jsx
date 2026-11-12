@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 
 // Replace placeholders with real details. Drop a transparent analyst photo at
 // client/public/images/analyst.webp (PNG also works — update the path).
-const ANALYST_NAME = '[YOUR NAME]';
-const SEBI_NO = '[YOUR SEBI NO]';
+const ANALYST_NAME = 'Priya Kolhe';
+const SEBI_NO = 'INH000031611';
 const ANALYST_PHOTO = '/images/analyst.webp';
 
 const STATS = [
-  { value: '[5000+]', label: 'Clients served' },
-  { value: '[10+]', label: 'Years in markets' },
-  { value: 'Mon–Sat', label: 'Client support' },
+  { value: '10+', label: 'Years in markets' },
+  { value: 'Mon–Sun', label: 'Client support' },
 ];
 
 const SAMPLE_CALL = {
@@ -21,12 +20,10 @@ const SAMPLE_CALL = {
 };
 
 const styles = `
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,700&display=swap');
-
 .hero {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, var(--color-emerald-light) 0%, #f4fbf8 45%, var(--color-bg) 100%);
+  background: var(--gradient-hero);
   padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(3rem, 6vw, 5.5rem);
 }
 .hero::before {
@@ -37,7 +34,7 @@ const styles = `
   width: 420px;
   height: 420px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(20, 163, 139, 0.14), transparent 70%);
+  background: radial-gradient(circle, rgba(11, 122, 87, 0.14), transparent 70%);
   pointer-events: none;
 }
 .hero__grid {
@@ -54,7 +51,7 @@ const styles = `
   align-items: center;
   gap: var(--space-sm);
   padding: 0.375rem 0.875rem;
-  border: 1px solid rgba(15, 122, 92, 0.25);
+  border: 1px solid rgba(11, 122, 87, 0.25);
   border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.8);
   color: var(--color-emerald-dark);
@@ -66,7 +63,7 @@ const styles = `
   height: 8px;
   border-radius: 50%;
   background: var(--color-teal);
-  box-shadow: 0 0 0 4px rgba(20, 163, 139, 0.18);
+  box-shadow: 0 0 0 4px rgba(11, 122, 87, 0.18);
 }
 .hero__title {
   margin: 1.25rem 0 1rem;
@@ -93,7 +90,7 @@ const styles = `
   right: -4px;
   bottom: 0.08em;
   height: 0.32em;
-  background: rgba(20, 163, 139, 0.2);
+  background: rgba(11, 122, 87, 0.2);
   border-radius: 4px;
   z-index: -1;
 }
@@ -122,13 +119,13 @@ const styles = `
 .hero__btn--primary {
   background: var(--gradient-cta);
   color: #fff;
-  box-shadow: 0 8px 20px rgba(15, 122, 92, 0.28);
+  box-shadow: 0 8px 20px rgba(11, 122, 87, 0.28);
 }
 .hero__btn--primary:hover,
 .hero__btn--primary:focus-visible {
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(15, 122, 92, 0.34);
+  box-shadow: 0 12px 26px rgba(11, 122, 87, 0.34);
 }
 .hero__btn--ghost {
   border: 1.5px solid var(--color-navy);
@@ -172,9 +169,9 @@ const styles = `
   position: absolute;
   inset: 8% 4% 0 10%;
   border-radius: 28px;
-  background: linear-gradient(150deg, #bfe8da 0%, var(--color-teal) 55%, var(--color-emerald) 100%);
+  background: linear-gradient(150deg, #BFE8DA 0%, #087F58 60%, #0E6E8C 100%);
   transform: rotate(-6deg);
-  box-shadow: 0 30px 60px rgba(15, 122, 92, 0.22);
+  box-shadow: 0 30px 60px rgba(11, 122, 87, 0.22);
 }
 .hero__panel::after {
   content: '';

@@ -27,7 +27,7 @@ const notify = (lead) => {
     ['sheet sync', appendLeadToSheet(lead)],
   ];
   if (lead.source === 'trial' || lead.source === 'popup') {
-    tasks.push(['confirmation SMS', sendConfirmationSms(lead.phone, 'Thank you for requesting a trial. Our team will contact you shortly. [YOUR NAME]')]);
+    tasks.push(['confirmation SMS', sendConfirmationSms(lead.phone, 'Thank you for requesting a trial. Our team will contact you shortly. Priya Kolhe')]);
   }
   Promise.allSettled(tasks.map(([, p]) => p)).then((results) => {
     results.forEach((r, i) => {

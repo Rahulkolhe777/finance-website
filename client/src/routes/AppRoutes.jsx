@@ -13,11 +13,13 @@ import GrievanceRedressal from '../pages/GrievanceRedressal.jsx';
 import PaymentSuccess from '../pages/PaymentSuccess.jsx';
 import PaymentFailed from '../pages/PaymentFailed.jsx';
 import NotFound from '../pages/NotFound.jsx';
-import PrivacyPolicy from '../pages/legal/PrivacyPolicy.jsx';
+// File is not named PrivacyPolicy.jsx: ad blockers block that URL in dev mode.
+import PrivacyPolicy from '../pages/legal/DataPolicy.jsx';
 import UserConsent from '../pages/legal/UserConsent.jsx';
 import InvestorCharter from '../pages/legal/InvestorCharter.jsx';
 import Disclosure from '../pages/legal/Disclosure.jsx';
 import Terms from '../pages/legal/Terms.jsx';
+import { COURSES_ENABLED } from '../data/courses.js';
 import AccessibilityStatement from '../pages/legal/AccessibilityStatement.jsx';
 
 export default function AppRoutes() {
@@ -28,8 +30,9 @@ export default function AppRoutes() {
         <Route path="about" element={<About />} />
         <Route path="about-us" element={<Navigate to="/about" replace />} />
         <Route path="services" element={<Services />} />
-        <Route path="courses" element={<Courses />} />
-        <Route path="courses/:slug" element={<CourseDetail />} />
+        {/* Courses are switched off until launched; old links go to the homepage. */}
+        <Route path="courses" element={COURSES_ENABLED ? <Courses /> : <Navigate to="/" replace />} />
+        <Route path="courses/:slug" element={COURSES_ENABLED ? <CourseDetail /> : <Navigate to="/" replace />} />
         <Route path="pricing" element={<Pricing />} />
         <Route path="free-trial" element={<TrialForm />} />
         <Route path="contact" element={<Contact />} />

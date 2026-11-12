@@ -1,20 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import PricingSection from '../components/home/PricingSection.jsx';
-import { plans, segments } from '../data/plans.js';
-import { createOrder } from '../services/paymentService.js';
+import { periods, plans, segments } from '../data/plans.js';
+import CheckoutForm from '../components/forms/CheckoutForm.jsx';
 import formatPrice from '../utils/formatPrice.js';
 
 // Replace placeholders with your real details.
-const GATEWAYS = [{ id: 'primary', label: '[GATEWAY]' }];
-const PAYMENT_METHODS = ['UPI', 'Debit / Credit Cards', 'Net Banking', 'Wallets']; // [EDIT TO MATCH YOUR GATEWAY]
-const REFUND_POLICY = '[TEXT]';
+const GATEWAYS = [{ id: 'primary', label: 'Razorpay' }];
+const PAYMENT_METHODS = ['UPI', 'Debit / Credit Cards', 'Net Banking', 'Wallets'];
+const REFUND_POLICY = 'Fees once paid are non-refundable. Please use the free trial before subscribing.';
 
-const PERIOD_COLUMNS = [
-  { period: 'monthly', label: 'Monthly' },
-  { period: 'quarterly', label: 'Quarterly' },
-  { period: 'half-yearly', label: 'Half-yearly' },
-];
+const PERIOD_COLUMNS = periods.map((p) => ({ period: p.period, label: p.name, featured: p.featured }));
 
 const priceLabel = (price) => (typeof price === 'number' ? formatPrice(price) : '[₹ PRICE]');
 const planFor = (segment, period) => plans.find((p) => p.segment === segment && p.period === period);
@@ -55,11 +51,10 @@ const styles = `
 
 /* checkout */
 .checkout {
+  --checkout-error: #FFB4A8;
   scroll-margin-top: calc(var(--header-height) + 1rem);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1.5rem;
-  align-items: center;
+  gap: 1.25rem;
   margin-top: 1.5rem;
   padding: clamp(1.5rem, 4vw, 2rem);
   border-radius: 24px;
@@ -70,22 +65,7 @@ const styles = `
 .checkout__label { margin: 0 0 0.25rem; font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #3DD39B; }
 .checkout__plan { margin: 0; font-size: 1.5rem; font-weight: 800; }
 .checkout__meta { margin: 0.25rem 0 0; color: #A9BAC9; }
-.checkout__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-.checkout__error { grid-column: 1 / -1; margin: 0; color: #FFB4A8; font-size: 0.9375rem; }
 .checkout__change { color: #3DD39B; text-decoration: underline; font-size: 0.9375rem; }
-.pay-btn {
-  min-height: 52px;
-  padding: 0 1.75rem;
-  border: 0;
-  border-radius: 9999px;
-  background: var(--pp-gradient);
-  color: #fff;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-.pay-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-.pay-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
 /* comparison */
 .compare__scroll {
@@ -129,48 +109,23 @@ const styles = `
 .pay-info__link { color: var(--pp-emerald); text-decoration: underline; }
 @media (max-width: 900px) {
   .pay-info { grid-template-columns: 1fr; }
-  .checkout { grid-template-columns: 1fr; }
-}
-@media (max-width: 480px) {
-  .checkout__actions .pay-btn { width: 100%; }
 }
 `;
 
 export default function Pricing() {
   const [searchParams] = useSearchParams();
   const selectedPlan = plans.find((p) => p.slug === searchParams.get('plan')) || null;
-  const [paying, setPaying] = useState(false);
-  const [payError, setPayError] = useState('');
   const checkoutRef = useRef(null);
 
   // Bring the checkout panel into view when arriving with ?plan=…
   useEffect(() => {
     if (!selectedPlan) return undefined;
-    setPayError('');
     const frame = requestAnimationFrame(() => {
       checkoutRef.current?.scrollIntoView({ block: 'start' });
       checkoutRef.current?.focus({ preventScroll: true });
     });
     return () => cancelAnimationFrame(frame);
   }, [selectedPlan]);
-
-  const pay = async (gatewayId) => {
-    if (!selectedPlan) return;
-    setPaying(true);
-    setPayError('');
-    try {
-      const order = await createOrder({ purpose: 'plan', refId: selectedPlan.slug, gateway: gatewayId });
-      if (order && order.redirectUrl) {
-        window.location.assign(order.redirectUrl);
-        return;
-      }
-      setPayError('Online payment is not available yet. Please contact us to subscribe.');
-    } catch {
-      setPayError('Online payment is not available yet. Please contact us to subscribe.');
-    } finally {
-      setPaying(false);
-    }
-  };
 
   return (
     <div className="pricing-page">
@@ -195,14 +150,13 @@ export default function Pricing() {
                   <a href="#plans" className="checkout__change">Change plan</a>
                 </p>
               </div>
-              <div className="checkout__actions">
-                {GATEWAYS.map((gateway) => (
-                  <button key={gateway.id} type="button" className="pay-btn" disabled={paying} onClick={() => pay(gateway.id)}>
-                    {paying ? 'Redirecting…' : 'Pay with ' + gateway.label}
-                  </button>
-                ))}
-              </div>
-              {payError && <p className="checkout__error" role="alert">{payError}</p>}
+              <CheckoutForm
+                key={selectedPlan.slug}
+                purpose="plan"
+                refId={selectedPlan.slug}
+                idPrefix="plan-checkout"
+                payLabel={'Pay ' + priceLabel(selectedPlan.price) + ' securely'}
+              />
             </section>
           )}
         </div>
@@ -222,15 +176,15 @@ export default function Pricing() {
                 <tr>
                   <th scope="col">Plan</th>
                   {PERIOD_COLUMNS.map((col) => (
-                    <th key={col.period} scope="col" className={col.period === 'quarterly' ? 'is-featured' : undefined}>
+                    <th key={col.period} scope="col" className={col.featured ? 'is-featured' : undefined}>
                       {col.label}
-                      {col.period === 'quarterly' && ' · Best value'}
+                      {col.featured && ' · Best value'}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                <tr className="compare__group"><th scope="rowgroup" colSpan={4}>Price by segment</th></tr>
+                <tr className="compare__group"><th scope="rowgroup" colSpan={PERIOD_COLUMNS.length + 1}>Price by segment</th></tr>
                 {segments.map((segment) => (
                   <tr key={segment.id}>
                     <th scope="row">{segment.label}</th>
@@ -240,10 +194,10 @@ export default function Pricing() {
                     })}
                   </tr>
                 ))}
-                <tr className="compare__group"><th scope="rowgroup" colSpan={4}>What you get</th></tr>
+                <tr className="compare__group"><th scope="rowgroup" colSpan={PERIOD_COLUMNS.length + 1}>What you get</th></tr>
                 <tr>
-                  <th scope="row">Calls a day</th>
-                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>[N]</td>)}
+                  <th scope="row">Calls</th>
+                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>25–30 a month*</td>)}
                 </tr>
                 <tr>
                   <th scope="row">Entry, two targets and a stop-loss</th>
@@ -251,11 +205,14 @@ export default function Pricing() {
                 </tr>
                 <tr>
                   <th scope="row">Support</th>
-                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>Monday to Saturday</td>)}
+                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>Monday to Sunday</td>)}
                 </tr>
                 <tr>
-                  <th scope="row">Discount on single payment</th>
-                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>{col.period === 'monthly' ? '—' : '[X]%'}</td>)}
+                  <th scope="row">Savings vs paying quarterly</th>
+                  {PERIOD_COLUMNS.map((col) => {
+                    const savings = planFor(segments[0].id, col.period)?.savings;
+                    return <td key={col.period}>{savings ? '₹' + savings.amount.toLocaleString('en-IN') + ' (' + savings.percent + '%)' : '—'}</td>;
+                  })}
                 </tr>
                 <tr>
                   <th scope="row">Billing</th>
@@ -264,6 +221,7 @@ export default function Pricing() {
               </tbody>
             </table>
           </div>
+          <p style={{ margin: '0.75rem 0 0', fontSize: '0.8125rem', color: '#4F5F6B' }}>* Number of calls is subject to market conditions.</p>
         </div>
       </section>
 
@@ -281,9 +239,9 @@ export default function Pricing() {
               </p>
             </article>
             <article className="pay-info__card">
-              <h3 className="pay-info__title">GST invoice</h3>
+              <h3 className="pay-info__title">Payment receipt</h3>
               <p className="pay-info__text">
-                Fees are [inclusive / exclusive] of GST. A GST invoice is sent to your email after every successful payment.
+                Fees are inclusive of GST. A payment receipt is sent to your email after every successful payment.
               </p>
             </article>
             <article className="pay-info__card">

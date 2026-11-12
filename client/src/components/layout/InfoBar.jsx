@@ -1,9 +1,9 @@
 // Replace the placeholders below with the real registration and contact details.
-const SUPPORT_EMAIL = 'support@[YOUR-DOMAIN].com';
-const SUPPORT_PHONE = '[YOUR PHONE]';
-const SEBI_RA_NO = '[NO]';
-const BSE_ENLISTMENT_NO = '[NO]';
-const KYC_VERIFY_URL = '#'; // [ADD KRA KYC VERIFICATION URL]
+const SUPPORT_EMAIL = 'kolhepriya57@gmail.com';
+const SUPPORT_PHONE = '+91 70389 09149';
+const SEBI_RA_NO = 'INH000031611';
+const BSE_ENLISTMENT_NO = '7656';
+const KYC_VERIFY_URL = 'https://validate.cvlindia.com/CVLKRAVerification_V1/'; // CVL KRA KYC status check
 
 const styles = `
 .info-bar {
@@ -33,7 +33,7 @@ const styles = `
 }
 .info-bar a:hover,
 .info-bar a:focus-visible {
-  color: var(--color-teal);
+  color: var(--color-emerald-on-dark);
 }
 .info-bar__sep {
   color: var(--color-on-dark-muted);

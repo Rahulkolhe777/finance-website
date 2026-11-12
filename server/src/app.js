@@ -13,6 +13,9 @@ import adminRoutes from './routes/adminRoutes.js';
 
 const app = express();
 
+// Behind a hosting proxy / load balancer: use the real client IP (rate limits, logs).
+app.set('trust proxy', 1);
+
 app.use(cors({ origin: env.clientUrl }));
 app.use(express.json({ limit: '100kb' }));
 app.use('/api', apiLimiter);
