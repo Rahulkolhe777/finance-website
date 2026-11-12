@@ -21,7 +21,7 @@ export const periods = [
 ];
 
 const buildFeatures = (discount) => [
-  '[N] calls a day',
+  '25–30 calls a month (subject to market conditions)',
   'Entry, two targets and a stop-loss on every call',
   'Support Monday to Saturday',
   ...(discount ? [discount + '% discount on single payment'] : []),

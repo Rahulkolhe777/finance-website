@@ -196,8 +196,8 @@ export default function Pricing() {
                 ))}
                 <tr className="compare__group"><th scope="rowgroup" colSpan={PERIOD_COLUMNS.length + 1}>What you get</th></tr>
                 <tr>
-                  <th scope="row">Calls a day</th>
-                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>[N]</td>)}
+                  <th scope="row">Calls</th>
+                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>25–30 a month*</td>)}
                 </tr>
                 <tr>
                   <th scope="row">Entry, two targets and a stop-loss</th>
@@ -218,6 +218,7 @@ export default function Pricing() {
               </tbody>
             </table>
           </div>
+          <p style={{ margin: '0.75rem 0 0', fontSize: '0.8125rem', color: '#4F5F6B' }}>* Number of calls is subject to market conditions.</p>
         </div>
       </section>
 

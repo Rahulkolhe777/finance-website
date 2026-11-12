@@ -16,7 +16,7 @@ const SEGMENTS = [
   .map((segment) => ({
   ...segment,
   whoFor: '[TEXT]',
-  callsPerDay: '[N]',
+  callsPerDay: '25–30 calls a month, subject to market conditions',
   approach: '[TEXT]',
   riskNote: '[RISK NOTE]',
 }));
@@ -280,7 +280,7 @@ export default function Services() {
                   <dd>{segment.whoFor}</dd>
                 </div>
                 <div className="service-block__fact">
-                  <dt>Calls per day</dt>
+                  <dt>Number of calls</dt>
                   <dd>{segment.callsPerDay}</dd>
                 </div>
                 <div className="service-block__fact" style={{ gridColumn: '1 / -1' }}>
