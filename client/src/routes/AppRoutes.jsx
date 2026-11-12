@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from '../components/layout/Layout.jsx';
 import Home from '../pages/Home.jsx';
 import About from '../pages/About.jsx';
@@ -25,6 +25,7 @@ export default function AppRoutes() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
+        <Route path="about-us" element={<Navigate to="/about" replace />} />
         <Route path="services" element={<Services />} />
         <Route path="courses" element={<Courses />} />
         <Route path="courses/:slug" element={<CourseDetail />} />
