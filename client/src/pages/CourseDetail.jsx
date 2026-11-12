@@ -3,7 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import Accordion from '../components/common/Accordion.jsx';
 import CheckoutForm from '../components/forms/CheckoutForm.jsx';
 import { getCourseBySlug } from '../services/courseService.js';
-import { PLACEHOLDER_COURSES, coursePriceLabel } from './Courses.jsx';
+import { courses as PLACEHOLDER_COURSES } from '../data/courses.js';
+import { priceOrPlaceholder } from '../utils/formatPrice.js';
 
 
 const styles = `
@@ -233,7 +234,7 @@ export default function CourseDetail() {
         </div>
 
         <aside className="course-detail__aside" aria-label="Enrollment">
-          <p className="course-detail__price">{coursePriceLabel(course.price)}</p>
+          <p className="course-detail__price">{priceOrPlaceholder(course.price)}</p>
           <dl className="course-detail__facts">
             <div className="course-detail__fact"><dt>Duration</dt><dd>{course.duration || '[DURATION]'}</dd></div>
             <div className="course-detail__fact"><dt>Level</dt><dd>{course.level}</dd></div>
@@ -245,7 +246,7 @@ export default function CourseDetail() {
               purpose="course"
               refId={course.slug}
               idPrefix="course-checkout"
-              payLabel={'Pay ' + coursePriceLabel(course.price) + ' & Enroll'}
+              payLabel={'Pay ' + priceOrPlaceholder(course.price) + ' & Enroll'}
             />
           ) : (
             <button type="button" className="course-detail__enroll" onClick={() => setShowCheckout(true)}>

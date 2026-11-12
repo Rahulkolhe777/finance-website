@@ -1,57 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import CourseCard from '../components/common/CourseCard.jsx';
+import { COURSE_LEVELS, COURSE_MODES, courses as placeholderCourses } from '../data/courses.js';
 import { getCourses } from '../services/courseService.js';
-import formatPrice from '../utils/formatPrice.js';
-
-export const COURSE_LEVELS = ['Beginner', 'Intermediate', 'Advanced'];
-export const COURSE_MODES = ['Recorded', 'Live Online'];
-
-// Courses: [LIST WITH DETAILS]. Shown until published courses come from the API;
-// CourseDetail.jsx uses the same entries as its fallback.
-const placeholderDetail = (n) => ({
-  overview: '[COURSE OVERVIEW]',
-  syllabus: [1, 2, 3].map((m) => ({ title: '[MODULE ' + m + ' TITLE]', topics: ['[TOPIC]', '[TOPIC]'] })),
-  instructor: { name: '[INSTRUCTOR NAME]', title: '[CREDENTIALS]', bio: '[INSTRUCTOR BIO]', photo: '' },
-  faqs: [1, 2, 3].map((q) => ({ question: '[COURSE ' + n + ' QUESTION ' + q + ']', answer: '[ANSWER]' })),
-});
-
-export const PLACEHOLDER_COURSES = [
-  {
-    slug: 'stock-market-basics',
-    title: 'Stock Market Basics',
-    level: 'Beginner',
-    mode: 'Recorded',
-    shortDescription: 'Start from zero: how markets work, order types, reading charts and managing risk.',
-    highlights: ['Market and broker basics', 'Candlesticks and trends', 'Position sizing and stop-loss'],
-    price: null,
-    duration: '[DURATION]',
-    ...placeholderDetail(1),
-  },
-  {
-    slug: 'technical-analysis-program',
-    title: 'Technical Analysis Program',
-    level: 'Intermediate',
-    mode: 'Live Online',
-    shortDescription: 'Learn to find setups for swing and positional trades using price action and indicators.',
-    highlights: ['Support, resistance, patterns', 'Entry, target and exit rules', 'Weekly doubt-clearing sessions'],
-    price: null,
-    duration: '[DURATION]',
-    ...placeholderDetail(2),
-  },
-  {
-    slug: 'options-trading-mentorship',
-    title: 'Options Trading Mentorship',
-    level: 'Advanced',
-    mode: 'Live Online',
-    shortDescription: 'Understand option pricing, strategies and risk control for index and stock options.',
-    highlights: ['Option chain and Greeks', 'Intraday and positional strategies', 'Trading psychology and journaling'],
-    price: null,
-    duration: '[DURATION]',
-    ...placeholderDetail(3),
-  },
-];
-
-export const coursePriceLabel = (price) => (typeof price === 'number' ? formatPrice(price) : '[₹ PRICE]');
 
 const styles = `
 .courses-page {
@@ -60,11 +11,10 @@ const styles = `
   --cp-mint: #EEF5F2;
   --cp-border: #D9E5E0;
   --cp-muted: #5B6B78;
-  --cp-gradient: linear-gradient(90deg, #087F58, #0E6E8C);
   color: var(--cp-navy);
 }
 .courses-page__hero {
-  background: linear-gradient(#EAF8F1, #fff);
+  background: var(--gradient-hero);
   padding: clamp(3rem, 7vw, 4.5rem) 0 clamp(1.5rem, 3vw, 2rem);
   text-align: center;
 }
@@ -76,7 +26,7 @@ const styles = `
   letter-spacing: -0.02em;
 }
 .courses-page__accent {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-family: var(--font-accent);
   font-style: italic;
   font-weight: 700;
   letter-spacing: 0;
@@ -133,74 +83,6 @@ const styles = `
   padding: 0;
   list-style: none;
 }
-.cp-card {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border: 1px solid var(--cp-border);
-  border-radius: 20px;
-  background: #fff;
-  transition: transform 200ms ease, box-shadow 200ms ease;
-}
-.cp-card:hover,
-.cp-card:focus-within {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 15px -3px rgba(11, 27, 43, 0.1), 0 4px 6px -4px rgba(11, 27, 43, 0.1);
-}
-.cp-card__media {
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #DDF3EA, var(--cp-mint));
-  color: var(--cp-muted);
-  font-size: 0.8125rem;
-  font-weight: 600;
-}
-.cp-card__media img { width: 100%; height: 100%; object-fit: cover; }
-.cp-card__body { flex: 1; display: flex; flex-direction: column; gap: 0.75rem; padding: 1.5rem; }
-.cp-card__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.cp-card__tag {
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  background: var(--cp-mint);
-  color: var(--cp-emerald);
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-.cp-card__tag--mode { background: #fff; border: 1px solid var(--cp-border); color: var(--cp-navy); }
-.cp-card__title { margin: 0; font-size: 1.1875rem; font-weight: 700; }
-.cp-card__title a { color: inherit; }
-.cp-card__title a:hover { color: var(--cp-emerald); }
-.cp-card__desc { margin: 0; color: var(--cp-muted); font-size: 0.9375rem; line-height: 1.6; }
-.cp-card__points { display: grid; gap: 0.375rem; margin: 0; padding: 0; list-style: none; font-size: 0.875rem; }
-.cp-card__points li { display: flex; gap: 0.5rem; }
-.cp-card__points svg { flex-shrink: 0; margin-top: 0.2em; color: var(--cp-emerald); }
-.cp-card__footer {
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid var(--cp-border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-.cp-card__price { display: block; font-size: 1.25rem; font-weight: 800; }
-.cp-card__duration { font-size: 0.8125rem; color: var(--cp-muted); }
-.cp-card__cta {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 1.375rem;
-  border-radius: 9999px;
-  background: var(--cp-gradient);
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.9375rem;
-}
-.cp-card__cta:hover, .cp-card__cta:focus-visible { color: #fff; box-shadow: 0 8px 18px rgba(8, 127, 88, 0.3); }
 .courses-page__empty {
   padding: 3rem 1rem;
   border: 1px dashed var(--cp-border);
@@ -232,14 +114,10 @@ const styles = `
   .courses-grid { grid-template-columns: 1fr; }
   .courses-filters { justify-content: flex-start; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .cp-card { transition: none; }
-  .cp-card:hover, .cp-card:focus-within { transform: none; }
-}
 `;
 
 export default function Courses() {
-  const [courses, setCourses] = useState(PLACEHOLDER_COURSES);
+  const [courses, setCourses] = useState(placeholderCourses);
   const [searchParams, setSearchParams] = useSearchParams();
   const level = COURSE_LEVELS.includes(searchParams.get('level')) ? searchParams.get('level') : '';
   const mode = COURSE_MODES.includes(searchParams.get('mode')) ? searchParams.get('mode') : '';
@@ -319,46 +197,7 @@ export default function Courses() {
           <ul className="courses-grid">
             {visible.map((course) => (
               <li key={course.slug}>
-                <article className="cp-card">
-                  <div className="cp-card__media">
-                    {course.thumbnail ? (
-                      <img src={course.thumbnail} alt={course.title} loading="lazy" decoding="async" width="640" height="360" />
-                    ) : (
-                      <span>[COURSE IMAGE]</span>
-                    )}
-                  </div>
-                  <div className="cp-card__body">
-                    <div className="cp-card__tags">
-                      <span className="cp-card__tag">{course.level}</span>
-                      <span className="cp-card__tag cp-card__tag--mode">{course.mode}</span>
-                    </div>
-                    <h2 className="cp-card__title">
-                      <Link to={'/courses/' + course.slug}>{course.title}</Link>
-                    </h2>
-                    <p className="cp-card__desc">{course.shortDescription}</p>
-                    {Array.isArray(course.highlights) && course.highlights.length > 0 && (
-                      <ul className="cp-card__points">
-                        {course.highlights.slice(0, 3).map((point) => (
-                          <li key={point}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M5 12l5 5L20 7" />
-                            </svg>
-                            {point}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    <div className="cp-card__footer">
-                      <div>
-                        <span className="cp-card__price">{coursePriceLabel(course.price)}</span>
-                        <span className="cp-card__duration">{course.duration || '[DURATION]'}</span>
-                      </div>
-                      <Link to={'/courses/' + course.slug} className="cp-card__cta" aria-label={'Enroll now in ' + course.title}>
-                        Enroll Now
-                      </Link>
-                    </div>
-                  </div>
-                </article>
+                <CourseCard course={course} headingLevel={2} />
               </li>
             ))}
           </ul>
