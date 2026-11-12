@@ -12,16 +12,9 @@ const CREDENTIALS = [
 ];
 const VISION = '[TEXT]';
 const MISSION = '[TEXT]';
-const TEAM = [
-  { name: '[NAME]', role: '[ROLE]', photo: '' },
-  { name: '[NAME]', role: '[ROLE]', photo: '' },
-  { name: '[NAME]', role: '[ROLE]', photo: '' },
-];
 const OFFICE_ADDRESS = 'HP Gas Office, Jalalkheda Road, Panchawati, Katol, Maharashtra 441302';
 
 const isPlaceholder = (text) => /^\[[^\]]+\]$/.test(text.trim());
-const initials = (name) =>
-  isPlaceholder(name) ? '' : name.split(/\s+/).map((part) => part[0]).slice(0, 2).join('').toUpperCase();
 
 const styles = `
 .about {
@@ -184,43 +177,6 @@ const styles = `
   font-weight: 800;
 }
 
-/* team */
-.about-team__list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 1.5rem);
-  margin: 2rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-.about-team__card {
-  height: 100%;
-  padding: 1.75rem;
-  border: 1px solid var(--ab-border);
-  border-radius: 20px;
-  background: #fff;
-  text-align: center;
-  transition: transform 200ms ease, box-shadow 200ms ease;
-}
-.about-team__card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(11, 27, 43, 0.08); }
-.about-team__avatar {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: 9999px;
-  background: var(--ab-mint);
-  color: var(--ab-emerald);
-  font-size: 1.5rem;
-  font-weight: 800;
-}
-.about-team__avatar img { width: 100%; height: 100%; object-fit: cover; }
-.about-team__name { margin: 0; font-size: 1.125rem; font-weight: 800; }
-.about-team__role { margin: 0.25rem 0 0; color: var(--ab-muted); }
-
 /* office */
 .about-office__grid {
   display: grid;
@@ -261,17 +217,11 @@ const styles = `
   .about-hero__photo-wrap { min-height: 320px; max-width: 420px; width: 100%; margin: 0 auto; }
 }
 @media (max-width: 1024px) {
-  .about-creds__list,
-  .about-team__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about-creds__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
   .about-creds__list,
-  .about-team__list,
   .about-vm__grid { grid-template-columns: 1fr; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .about-team__card { transition: none; }
-  .about-team__card:hover { transform: none; }
 }
 `;
 
@@ -366,35 +316,6 @@ export default function About() {
               <p className="about__text" style={{ marginBottom: 0 }}>{MISSION}</p>
             </article>
           </div>
-        </div>
-      </section>
-
-      <section className="about__section" style={{ paddingTop: 0 }} aria-labelledby="about-team">
-        <div className="container">
-          <h2 id="about-team" className="about__h2" style={{ textAlign: 'center' }}>
-            Our <span className="about__accent">Team</span>
-          </h2>
-          <ul className="about-team__list">
-            {TEAM.map((member, index) => (
-              <li key={member.name + index}>
-                <article className="about-team__card">
-                  <div className="about-team__avatar" aria-hidden={!member.photo}>
-                    {member.photo ? (
-                      <img src={member.photo} alt={member.name + ', ' + member.role} loading="lazy" decoding="async" width="96" height="96" />
-                    ) : (
-                      initials(member.name) || (
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-                          <path d="M12 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0" />
-                        </svg>
-                      )
-                    )}
-                  </div>
-                  <h3 className="about-team__name">{member.name}</h3>
-                  <p className="about-team__role">{member.role}</p>
-                </article>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
