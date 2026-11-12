@@ -239,9 +239,9 @@ export default function Pricing() {
               </p>
             </article>
             <article className="pay-info__card">
-              <h3 className="pay-info__title">GST invoice</h3>
+              <h3 className="pay-info__title">Payment receipt</h3>
               <p className="pay-info__text">
-                Fees are [inclusive / exclusive] of GST. A GST invoice is sent to your email after every successful payment.
+                Fees are inclusive of GST. A payment receipt is sent to your email after every successful payment.
               </p>
             </article>
             <article className="pay-info__card">

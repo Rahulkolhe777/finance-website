@@ -10,7 +10,7 @@ const INITIAL_VALUES = { name: '', email: '', phone: '', terms: false };
 const validate = (values) => {
   const errors = {};
   if (values.name.trim().length < 2) errors.name = 'Please enter your full name.';
-  if (!EMAIL.test(values.email.trim())) errors.email = 'Enter a valid email (your receipt and GST invoice go here).';
+  if (!EMAIL.test(values.email.trim())) errors.email = 'Enter a valid email (your payment receipt goes here).';
   if (!INDIAN_MOBILE.test(values.phone)) errors.phone = 'Enter a valid 10-digit mobile number.';
   if (!values.terms) errors.terms = 'Please accept the Terms and refund policy to continue.';
   return errors;
