@@ -15,6 +15,7 @@
     "express": "^4.21.1",
     "express-rate-limit": "^7.4.1",
     "mongoose": "^8.8.1",
+    "nodemailer": "10.2.1",
     "research-analyst-website": "file:.."
   },
   "devDependencies": {
