@@ -1,0 +1,7 @@
+Prompt 2 — Hero
+Soft mint-to-white gradient section. Left: pill badge '[YOUR NAME] · SEBI Registered Research Analyst', H1
+with one italic Playfair Display word, one-line description, two buttons (Start Free Trial / View Services), three
+stats ([5000+] Clients, [10+] Years, Mon–Sat Support). Right: analyst photo (transparent PNG/WebP) in front
+of a tilted gradient panel, floating white SAMPLE CALL card (labelled SAMPLE), navy SEBI badge with
+number. Mobile: text above photo.
+Files: components/home/Hero.jsx · pages/Home.jsx
