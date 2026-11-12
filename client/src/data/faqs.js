@@ -4,7 +4,7 @@
 export const faqs = [
   { question: 'Are you SEBI registered?', answer: 'Yes. Our registration number is INH000031611.' },
   { question: 'Which plans are available?', answer: 'We currently offer Equity Cash research on quarterly, half-yearly and yearly plans.' },
-  { question: 'What is your refund policy?', answer: '[YOUR REFUND POLICY]' },
+  { question: 'What is your refund policy?', answer: 'Fees once paid are non-refundable. Please use the free trial before subscribing.' },
   { question: 'Do you offer guaranteed returns?', answer: 'No. Market investments carry risk and returns are never guaranteed.' },
   { question: 'Do you handle or manage my trading account?', answer: 'No. We only share research recommendations. We never ask for your trading login, password or OTP, and we do not trade on your behalf.' },
   { question: 'Do you work on a profit-sharing basis?', answer: 'No. We charge only a fixed subscription fee. We do not accept profit sharing or any fee linked to returns.' },

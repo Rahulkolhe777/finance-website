@@ -341,7 +341,7 @@ export default function PricingSection() {
 
         <p className="pricing__note">
           Fees are [inclusive / exclusive] of GST. Pay securely online through [YOUR PAYMENT GATEWAY].{' '}
-          [YOUR REFUND POLICY]. No guaranteed returns; market investments carry risk.{' '}
+          Fees once paid are non-refundable. No guaranteed returns; market investments carry risk.{' '}
           [ADD YOUR FEE DISCLOSURE AS REQUIRED BY SEBI]
         </p>
       </div>
