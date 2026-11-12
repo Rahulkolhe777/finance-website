@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { testimonials } from '../../data/testimonials.js';
+import { testimonials as allTestimonials } from '../../data/testimonials.js';
+
+const hasPlaceholder = (text) => /\[[^\]]+\]/.test(text);
+
+// Entries still containing [PLACEHOLDERS] are skipped; the section hides when none are left.
+const testimonials = allTestimonials.filter(
+  (item) => !hasPlaceholder(item.name) && !hasPlaceholder(item.profession) && !hasPlaceholder(item.content),
+);
 
 const STAR_PATH = 'M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9L12 2.5z';
 
@@ -229,7 +236,10 @@ export default function Testimonials() {
           ))}
         </div>
 
-        <p className="testimonials__disclaimer">[ADD YOUR SEBI-COMPLIANT TESTIMONIAL DISCLAIMER]</p>
+        <p className="testimonials__disclaimer">
+          Testimonials reflect individual client experiences and are not indicative of future performance or a
+          guarantee of returns. Investments in securities are subject to market risks.
+        </p>
       </div>
     </section>
   );
