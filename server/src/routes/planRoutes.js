@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { listPlans } from '../controllers/planController.js';
+import { listPlans, getPlanBySlug } from '../controllers/planController.js';
 
 const router = Router();
 
 router.get('/', listPlans);
+router.get('/:slug', getPlanBySlug);
 
 export default router;
