@@ -13,7 +13,8 @@ import GrievanceRedressal from '../pages/GrievanceRedressal.jsx';
 import PaymentSuccess from '../pages/PaymentSuccess.jsx';
 import PaymentFailed from '../pages/PaymentFailed.jsx';
 import NotFound from '../pages/NotFound.jsx';
-import PrivacyPolicy from '../pages/legal/PrivacyPolicy.jsx';
+// File is not named PrivacyPolicy.jsx: ad blockers block that URL in dev mode.
+import PrivacyPolicy from '../pages/legal/DataPolicy.jsx';
 import UserConsent from '../pages/legal/UserConsent.jsx';
 import InvestorCharter from '../pages/legal/InvestorCharter.jsx';
 import Disclosure from '../pages/legal/Disclosure.jsx';
