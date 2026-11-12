@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 // Replace every [PLACEHOLDER] with your real details.
 const ANALYST_NAME = 'Priya Kolhe';
 const ANALYST_PHOTO = '/images/analyst.webp';
-const STORY = ['[TEXT]'];
+const STORY = [
+  'Priya Kolhe is a SEBI-registered Research Analyst (INH000031611) and NISM Series XV certified, with over 10 years in the markets. Based in Katol, Maharashtra, she shares Equity Cash research with clear entry, target and stop-loss levels, and never handles client funds or trading accounts.',
+];
 const CREDENTIALS = [
   { title: 'SEBI Registered Research Analyst', detail: 'Registration No. INH000031611' },
   { title: 'NISM Certified', detail: 'NISM Series XV – Research Analyst Certification' },
