@@ -100,7 +100,7 @@ export default function PaymentSuccess() {
           )}
 
           <ol className="payment-result__steps">
-            <li>A GST invoice will be sent to your registered email.</li>
+            <li>A payment receipt will be sent to your registered email.</li>
             <li>Our team will contact you and add you to our WhatsApp and Telegram channels to start receiving calls.</li>
             <li>Read the <Link to="/legal/investor-charter">Investor Charter</Link> and <Link to="/legal/terms">Terms</Link>.</li>
           </ol>
