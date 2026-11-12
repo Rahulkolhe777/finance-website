@@ -19,7 +19,7 @@ const SEGMENTS = [
     pricingSegment: 'cash',
     whoFor: 'Retail investors who can hold positions for days to weeks.',
     callsPerDay: '25–30 calls a month, subject to market conditions',
-    approach: '[TEXT]',
+    approach: 'Every call comes with an entry range, a target and a stop-loss. We share updates when targets or stop-losses are hit.',
     riskNote: 'Equity investments carry market risk; past performance does not guarantee future results.',
   },
   { id: 'stock-options', title: 'Stock Options', pricingSegment: 'stock-options' },
