@@ -1,6 +1,6 @@
 // Replace the placeholders below with the real registration and contact details.
 const SUPPORT_EMAIL = 'kolhepriya57@gmail.com';
-const SUPPORT_PHONE = '[YOUR PHONE]';
+const SUPPORT_PHONE = '+91 70389 09149';
 const SEBI_RA_NO = 'INH000031611';
 const BSE_ENLISTMENT_NO = '[NO]';
 const KYC_VERIFY_URL = '#'; // [ADD KRA KYC VERIFICATION URL]

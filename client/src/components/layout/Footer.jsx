@@ -6,7 +6,7 @@ const SEBI_RA_NO = 'INH000031611';
 const BSE_NO = '[NO]';
 const ADDRESS = '[YOUR ADDRESS]';
 const EMAIL = 'kolhepriya57@gmail.com';
-const PHONE = '[YOUR PHONE]';
+const PHONE = '+91 70389 09149';
 const SMART_ODR_URL = 'https://smartodr.in/';
 
 // Set `url` for each profile you use; entries without a url are not shown.
