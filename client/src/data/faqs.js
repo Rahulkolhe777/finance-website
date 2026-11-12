@@ -2,7 +2,7 @@
 // Only fully filled answers (no [brackets]) are added to the FAQ JSON-LD schema.
 // Shape: { question, answer }
 export const faqs = [
-  { question: 'Are you SEBI registered?', answer: 'Yes. Our registration number is [YOUR SEBI NO].' },
+  { question: 'Are you SEBI registered?', answer: 'Yes. Our registration number is INH000031611.' },
   { question: 'Which plans are available?', answer: 'Monthly, quarterly and yearly. [EDIT TO MATCH YOUR PLANS]' },
   { question: 'What is your refund policy?', answer: '[YOUR REFUND POLICY]' },
   { question: 'Do you offer guaranteed returns?', answer: 'No. Market investments carry risk and returns are never guaranteed.' },

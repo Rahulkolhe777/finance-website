@@ -1,7 +1,7 @@
 // Replace the placeholders below with the real registration and contact details.
 const SUPPORT_EMAIL = 'support@[YOUR-DOMAIN].com';
 const SUPPORT_PHONE = '[YOUR PHONE]';
-const SEBI_RA_NO = '[NO]';
+const SEBI_RA_NO = 'INH000031611';
 const BSE_ENLISTMENT_NO = '[NO]';
 const KYC_VERIFY_URL = '#'; // [ADD KRA KYC VERIFICATION URL]
 

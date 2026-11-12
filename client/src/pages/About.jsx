@@ -6,7 +6,7 @@ const ANALYST_NAME = 'Priya Kolhe';
 const ANALYST_PHOTO = '/images/analyst.webp';
 const STORY = ['[TEXT]'];
 const CREDENTIALS = [
-  { title: 'SEBI Registered Research Analyst', detail: 'Registration No. [NO]' },
+  { title: 'SEBI Registered Research Analyst', detail: 'Registration No. INH000031611' },
   { title: 'NISM Certified', detail: '[NISM CERTIFICATION DETAILS]' },
   { title: 'Qualifications', detail: '[LIST]' },
 ];

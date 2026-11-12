@@ -5,7 +5,7 @@ const SELLER = {
   legalName: '[LEGAL NAME]',
   address: '[REGISTERED ADDRESS]',
   gstin: '[GSTIN]',
-  sebiRaNo: '[SEBI RA NO]',
+  sebiRaNo: 'INH000031611',
   sacCode: '[SAC CODE]',
   supplyNote: '[CGST + SGST / IGST as applicable]',
 };

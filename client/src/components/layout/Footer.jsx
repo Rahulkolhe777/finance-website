@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import RiskDisclaimer from '../common/RiskDisclaimer.jsx';
 
 // Replace placeholders with real details.
-const SEBI_RA_NO = '[NO]';
+const SEBI_RA_NO = 'INH000031611';
 const BSE_NO = '[NO]';
 const ADDRESS = '[YOUR ADDRESS]';
 const EMAIL = 'support@[YOUR-DOMAIN].com';
