@@ -15,16 +15,30 @@ export const segments = ALL_SEGMENTS.filter((s) => s.available).map(({ id, label
 
 // Billing periods offered. `featured` marks the BEST VALUE card (lowest cost per month).
 export const periods = [
-  { period: 'quarterly', name: 'Quarterly', perLabel: '/ quarter', billedLabel: 'Billed every 3 months', durationDays: 90, discount: null, featured: false },
-  { period: 'half-yearly', name: 'Half-yearly', perLabel: '/ 6 months', billedLabel: 'Billed every 6 months', durationDays: 182, discount: '[X]', featured: false },
-  { period: 'yearly', name: 'Yearly', perLabel: '/ year', billedLabel: 'Billed every 12 months', durationDays: 365, discount: '[X]', featured: true },
+  { period: 'quarterly', name: 'Quarterly', perLabel: '/ quarter', billedLabel: 'Billed every 3 months', durationDays: 90, quarters: 1, featured: false },
+  { period: 'half-yearly', name: 'Half-yearly', perLabel: '/ 6 months', billedLabel: 'Billed every 6 months', durationDays: 182, quarters: 2, featured: false },
+  { period: 'yearly', name: 'Yearly', perLabel: '/ year', billedLabel: 'Billed every 12 months', durationDays: 365, quarters: 4, featured: true },
 ];
 
-const buildFeatures = (discount) => [
+const inr = (n) => '₹' + n.toLocaleString('en-IN');
+
+// Saving compared with buying the same length as repeated quarterly plans.
+// Percent is rounded down so it never overstates the saving.
+export const savingsVsQuarterly = (prices, period) => {
+  const p = periods.find((x) => x.period === period);
+  const quarterly = prices.quarterly;
+  const price = prices[period];
+  if (!p || p.quarters <= 1 || typeof quarterly !== 'number' || typeof price !== 'number') return null;
+  const amount = quarterly * p.quarters - price;
+  if (amount <= 0) return null;
+  return { amount, percent: Math.floor((amount / (quarterly * p.quarters)) * 100), label: 'Save ' + inr(amount) + ' (' + Math.floor((amount / (quarterly * p.quarters)) * 100) + '%) vs paying quarterly' };
+};
+
+const buildFeatures = (savings) => [
   '25–30 calls a month (subject to market conditions)',
   'Entry, two targets and a stop-loss on every call',
   'Support Monday to Saturday',
-  ...(discount ? [discount + '% discount on single payment'] : []),
+  ...(savings ? [savings.label] : []),
 ];
 
 // Shape: { slug, segment, period, name, price, perLabel, billedLabel, durationDays, features: [], featured }
@@ -38,7 +52,8 @@ export const plans = ALL_SEGMENTS.filter((s) => s.available).flatMap((segment) =
     perLabel: p.perLabel,
     billedLabel: p.billedLabel,
     durationDays: p.durationDays,
-    features: buildFeatures(p.discount),
+    savings: savingsVsQuarterly(segment.prices, p.period),
+    features: buildFeatures(savingsVsQuarterly(segment.prices, p.period)),
     featured: p.featured,
   }))
 );

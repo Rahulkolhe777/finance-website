@@ -10,7 +10,7 @@ const GATEWAYS = [{ id: 'primary', label: '[GATEWAY]' }];
 const PAYMENT_METHODS = ['UPI', 'Debit / Credit Cards', 'Net Banking', 'Wallets']; // [EDIT TO MATCH YOUR GATEWAY]
 const REFUND_POLICY = '[TEXT]';
 
-const PERIOD_COLUMNS = periods.map((p) => ({ period: p.period, label: p.name, featured: p.featured, discount: p.discount }));
+const PERIOD_COLUMNS = periods.map((p) => ({ period: p.period, label: p.name, featured: p.featured }));
 
 const priceLabel = (price) => (typeof price === 'number' ? formatPrice(price) : '[₹ PRICE]');
 const planFor = (segment, period) => plans.find((p) => p.segment === segment && p.period === period);
@@ -208,8 +208,11 @@ export default function Pricing() {
                   {PERIOD_COLUMNS.map((col) => <td key={col.period}>Monday to Saturday</td>)}
                 </tr>
                 <tr>
-                  <th scope="row">Discount on single payment</th>
-                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>{col.discount ? col.discount + '%' : '—'}</td>)}
+                  <th scope="row">Savings vs paying quarterly</th>
+                  {PERIOD_COLUMNS.map((col) => {
+                    const savings = planFor(segments[0].id, col.period)?.savings;
+                    return <td key={col.period}>{savings ? '₹' + savings.amount.toLocaleString('en-IN') + ' (' + savings.percent + '%)' : '—'}</td>;
+                  })}
                 </tr>
                 <tr>
                   <th scope="row">Billing</th>
