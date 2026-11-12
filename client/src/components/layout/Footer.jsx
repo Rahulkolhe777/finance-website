@@ -30,8 +30,11 @@ const IMPORTANT_LINKS = [
   { to: '/legal/privacy-policy', label: 'Privacy Policy' },
   { to: '/legal/user-consent', label: 'User Consent' },
   { to: '/legal/investor-charter', label: 'Investor Charter' },
+  { to: '/legal/disclosure', label: 'Disclosure' },
+  { to: '/legal/terms', label: 'Terms & Conditions' },
   { to: '/grievance-redressal', label: 'Grievance Redressal' },
   { href: SMART_ODR_URL, label: 'Smart ODR' },
+  { to: '/legal/accessibility', label: 'Accessibility' },
 ];
 
 const styles = `
