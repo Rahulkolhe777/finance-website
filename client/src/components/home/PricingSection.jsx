@@ -340,7 +340,7 @@ export default function PricingSection() {
         </div>
 
         <p className="pricing__note">
-          Fees are inclusive of GST. Pay securely online through [YOUR PAYMENT GATEWAY].{' '}
+          Fees are inclusive of GST. Pay securely online through Razorpay.{' '}
           Fees once paid are non-refundable. No guaranteed returns; market investments carry risk.{' '}
           [ADD YOUR FEE DISCLOSURE AS REQUIRED BY SEBI]
         </p>
