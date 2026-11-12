@@ -1,0 +1,23 @@
+{
+  "name": "research-analyst-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed:plans": "node src/seed/seedPlans.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-rate-limit": "^7.4.1",
+    "mongoose": "^8.8.1",
+    "research-analyst-website": "file:.."
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
