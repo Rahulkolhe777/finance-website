@@ -229,7 +229,6 @@ export default function Header() {
         id="mobile-drawer"
         className={'header__drawer' + (isMenuOpen ? ' is-open' : '')}
         aria-label="Mobile menu"
-        aria-hidden={!isMenuOpen}
         inert={isMenuOpen ? undefined : ''}
       >
         <div className="header__drawer-top">
