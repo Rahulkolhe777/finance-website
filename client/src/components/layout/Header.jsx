@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { COURSES_ENABLED } from '../../data/courses.js';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About Us' },
   { to: '/services', label: 'Services' },
-  { to: '/courses', label: 'Courses' },
+  ...(COURSES_ENABLED ? [{ to: '/courses', label: 'Courses' }] : []),
   { to: '/pricing', label: 'Pricing & Payments' },
   { to: '/contact', label: 'Contact Us' },
 ];

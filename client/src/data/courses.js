@@ -2,6 +2,10 @@
 // (the API returns the same shape). Courses: [LIST WITH DETAILS].
 // `price` is in INR; null shows a [₹ PRICE] placeholder.
 
+// Courses are not offered yet. Set to true to bring back the homepage section,
+// the Courses menu link and the /courses pages.
+export const COURSES_ENABLED = false;
+
 export const COURSE_LEVELS = ['Beginner', 'Intermediate', 'Advanced'];
 export const COURSE_MODES = ['Recorded', 'Live Online'];
 
