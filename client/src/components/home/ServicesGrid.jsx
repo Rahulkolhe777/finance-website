@@ -162,7 +162,7 @@ export default function ServicesGrid() {
                 </span>
                 <h3 className="services-grid__card-title">{service.title}</h3>
                 <p className="services-grid__desc">{service.description}</p>
-                <Link to="/services" className="services-grid__link" aria-label={'Learn more about ' + service.title}>
+                <Link to={'/services#' + service.id} className="services-grid__link" aria-label={'Learn more about ' + service.title}>
                   Learn more <span aria-hidden="true">→</span>
                 </Link>
               </article>

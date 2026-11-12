@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { plans, segments } from '../../data/plans.js';
 import formatPrice from '../../utils/formatPrice.js';
 
@@ -224,10 +224,25 @@ const styles = `
 }
 `;
 
+// Segment from ?segment=<id> or the segment of ?plan=<slug>; falls back to the first tab.
+const segmentFromParams = (params) => {
+  const segment = params.get('segment');
+  if (segments.some((s) => s.id === segment)) return segment;
+  const plan = plans.find((p) => p.slug === params.get('plan'));
+  return plan ? plan.segment : segments[0].id;
+};
+
 const priceLabel = (price) => (typeof price === 'number' ? formatPrice(price) : '[₹ PRICE]');
 
 export default function PricingSection() {
-  const [activeSegment, setActiveSegment] = useState(segments[0].id);
+  const [searchParams] = useSearchParams();
+  const urlSegment = segmentFromParams(searchParams);
+  const [activeSegment, setActiveSegment] = useState(urlSegment);
+
+  // Follow the URL when it changes (e.g. arriving from a Services page Subscribe link).
+  useEffect(() => {
+    setActiveSegment(urlSegment);
+  }, [urlSegment]);
   const tabRefs = useRef([]);
 
   const visiblePlans = useMemo(
