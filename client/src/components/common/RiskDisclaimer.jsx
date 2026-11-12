@@ -26,7 +26,11 @@ export default function RiskDisclaimer({ variant = 'light', className = '' }) {
         before investing. Registration granted by SEBI and certification from NISM in no way guarantee
         performance of the intermediary or provide any assurance of returns to investors.
       </p>
-      <p>[PASTE FULL RISK DISCLAIMER]</p>
+      <p>
+        Past performance is not indicative of future returns. Research recommendations are for information only;
+        please consider your own financial situation before acting on them. We do not offer guaranteed returns,
+        profit sharing or account handling.
+      </p>
     </div>
   );
 }
