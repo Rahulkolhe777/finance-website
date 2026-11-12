@@ -7,7 +7,7 @@ const ANALYST_PHOTO = '/images/analyst.webp';
 const STORY = ['[TEXT]'];
 const CREDENTIALS = [
   { title: 'SEBI Registered Research Analyst', detail: 'Registration No. INH000031611' },
-  { title: 'NISM Certified', detail: '[NISM CERTIFICATION DETAILS]' },
+  { title: 'NISM Certified', detail: 'NISM Series XV – Research Analyst Certification' },
   { title: 'Qualifications', detail: '[LIST]' },
 ];
 const VISION = '[TEXT]';
