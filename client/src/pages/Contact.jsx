@@ -110,7 +110,10 @@ export default function Contact() {
           <h1 id="contact-title" className="contact-page__title">
             Contact <span className="contact-page__accent">Us</span>
           </h1>
-          <p className="contact-page__sub">[YOUR TEXT]</p>
+          <p className="contact-page__sub">
+            Have a question about our research or plans? Call, WhatsApp or email us; we're available Monday to
+            Sunday, 9:00 AM – 9:00 PM.
+          </p>
         </div>
       </section>
 
