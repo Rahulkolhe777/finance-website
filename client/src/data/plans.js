@@ -37,7 +37,7 @@ export const savingsVsQuarterly = (prices, period) => {
 const buildFeatures = (savings) => [
   '25–30 calls a month (subject to market conditions)',
   'Entry, two targets and a stop-loss on every call',
-  'Support Monday to Saturday',
+  'Support Monday to Sunday',
   ...(savings ? [savings.label] : []),
 ];
 

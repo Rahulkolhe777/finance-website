@@ -5,7 +5,7 @@ import ContactForm from '../components/forms/ContactForm.jsx';
 const PHONE = '+91 70389 09149';
 const EMAIL = 'kolhepriya57@gmail.com';
 const ADDRESS = 'HP Gas Office, Jalalkheda Road, Panchawati, Katol, Maharashtra 441302';
-const OFFICE_HOURS = 'Monday to Saturday, 9:00 AM – 9:00 PM';
+const OFFICE_HOURS = 'Monday to Sunday, 9:00 AM – 9:00 PM';
 
 const isPlaceholder = (text) => /\[[^\]]+\]/.test(text);
 

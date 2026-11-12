@@ -205,7 +205,7 @@ export default function Pricing() {
                 </tr>
                 <tr>
                   <th scope="row">Support</th>
-                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>Monday to Saturday</td>)}
+                  {PERIOD_COLUMNS.map((col) => <td key={col.period}>Monday to Sunday</td>)}
                 </tr>
                 <tr>
                   <th scope="row">Savings vs paying quarterly</th>

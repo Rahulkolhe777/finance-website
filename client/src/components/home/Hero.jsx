@@ -8,9 +8,8 @@ const SEBI_NO = 'INH000031611';
 const ANALYST_PHOTO = '/images/analyst.webp';
 
 const STATS = [
-  { value: '[5000+]', label: 'Clients served' },
-  { value: '[10+]', label: 'Years in markets' },
-  { value: 'Mon–Sat', label: 'Client support' },
+  { value: '10+', label: 'Years in markets' },
+  { value: 'Mon–Sun', label: 'Client support' },
 ];
 
 const SAMPLE_CALL = {
