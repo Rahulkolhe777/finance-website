@@ -66,7 +66,7 @@ Render sets `PORT` itself. `CLIENT_URL` must match the Vercel URL exactly (https
 3. Environment variable: `VITE_API_URL=https://<your-service>.onrender.com/api`
 4. Deploy, then put the final Vercel URL into Render's `CLIENT_URL` and redeploy the API.
 
-`VITE_API_URL` is baked in at build time; redeploy the frontend after changing it.
+`VITE_API_URL` is baked in at build time; redeploy the frontend after changing it. If it is not set, production builds fall back to `PRODUCTION_API_URL` in `client/src/services/api.js` (update it if the Render URL changes). A trailing `/` in `CLIENT_URL` is ignored.
 
 ## 5b. Keep the free Render API awake
 
