@@ -10,8 +10,8 @@ const CREDENTIALS = [
   { title: 'NISM Certified', detail: 'NISM Series XV – Research Analyst Certification' },
   { title: 'Qualifications', detail: '[LIST]' },
 ];
-const VISION = '[TEXT]';
-const MISSION = '[TEXT]';
+const VISION = 'To help retail investors make informed, disciplined decisions in the equity market.';
+const MISSION = "To share transparent, well-researched calls with clear entry, target and stop-loss levels, within SEBI's regulatory framework.";
 const OFFICE_ADDRESS = 'HP Gas Office, Jalalkheda Road, Panchawati, Katol, Maharashtra 441302';
 
 const isPlaceholder = (text) => /^\[[^\]]+\]$/.test(text.trim());
