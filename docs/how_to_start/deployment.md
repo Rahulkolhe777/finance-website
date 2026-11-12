@@ -56,7 +56,7 @@ Razorpay Dashboard → switch to **Test Mode** → Settings → API Keys → gen
 
 Render sets `PORT` itself. `CLIENT_URL` must match the Vercel URL exactly (https, no trailing slash) or the browser blocks API calls (CORS). The first deploy can use a guess and be corrected after step 5.
 
-4. After the first deploy, open the Render Shell and run `npm run seed:plans` once to load the pricing plans.
+4. Load the pricing plans into Atlas once, from your PC (Render free has no Shell). In PowerShell, from the `server` folder: `$env:MONGODB_URI="<Atlas connection string>"; npm run seed:plans` (an environment variable set this way overrides `server/.env`; close the terminal afterwards).
 5. Check `https://<your-service>.onrender.com/api/health` returns `{"status":"ok"}`.
 
 ## 5. Frontend on Vercel
