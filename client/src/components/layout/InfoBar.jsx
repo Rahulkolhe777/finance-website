@@ -1,5 +1,5 @@
 // Replace the placeholders below with the real registration and contact details.
-const SUPPORT_EMAIL = 'support@[YOUR-DOMAIN].com';
+const SUPPORT_EMAIL = 'kolhepriya57@gmail.com';
 const SUPPORT_PHONE = '[YOUR PHONE]';
 const SEBI_RA_NO = 'INH000031611';
 const BSE_ENLISTMENT_NO = '[NO]';

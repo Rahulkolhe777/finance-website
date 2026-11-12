@@ -5,7 +5,7 @@ import RiskDisclaimer from '../common/RiskDisclaimer.jsx';
 const SEBI_RA_NO = 'INH000031611';
 const BSE_NO = '[NO]';
 const ADDRESS = '[YOUR ADDRESS]';
-const EMAIL = 'support@[YOUR-DOMAIN].com';
+const EMAIL = 'kolhepriya57@gmail.com';
 const PHONE = '[YOUR PHONE]';
 const SMART_ODR_URL = 'https://smartodr.in/';
 

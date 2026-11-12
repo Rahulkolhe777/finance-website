@@ -3,7 +3,7 @@ import ContactForm from '../components/forms/ContactForm.jsx';
 
 // Replace placeholders with your real details.
 const PHONE = '[YOUR PHONE]';
-const EMAIL = 'support@[YOUR-DOMAIN].com';
+const EMAIL = 'kolhepriya57@gmail.com';
 const ADDRESS = '[YOUR ADDRESS]';
 const OFFICE_HOURS = '[HOURS]';
 
