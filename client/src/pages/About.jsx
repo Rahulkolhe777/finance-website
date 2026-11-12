@@ -17,7 +17,7 @@ const TEAM = [
   { name: '[NAME]', role: '[ROLE]', photo: '' },
   { name: '[NAME]', role: '[ROLE]', photo: '' },
 ];
-const OFFICE_ADDRESS = '[REGISTERED OFFICE ADDRESS]';
+const OFFICE_ADDRESS = 'HP Gas Office, Jalalkheda Road, Panchawati, Katol, Maharashtra 441302';
 
 const isPlaceholder = (text) => /^\[[^\]]+\]$/.test(text.trim());
 const initials = (name) =>

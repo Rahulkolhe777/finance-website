@@ -4,7 +4,7 @@ import ContactForm from '../components/forms/ContactForm.jsx';
 // Replace placeholders with your real details.
 const PHONE = '+91 70389 09149';
 const EMAIL = 'kolhepriya57@gmail.com';
-const ADDRESS = '[YOUR ADDRESS]';
+const ADDRESS = 'HP Gas Office, Jalalkheda Road, Panchawati, Katol, Maharashtra 441302';
 const OFFICE_HOURS = '[HOURS]';
 
 const isPlaceholder = (text) => /\[[^\]]+\]/.test(text);
